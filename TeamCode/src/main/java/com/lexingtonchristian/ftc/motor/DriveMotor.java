@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class DriveMotor {
 
-    private static final int CLICKS_PER_ROTATION = 28;
-
     /**
      * Private reference to the bare motor
      */
@@ -17,12 +15,18 @@ public class DriveMotor {
     private final double diameter;
 
     /**
+     * Number of motor ticks per revolution
+     */
+    private final double ticksPerRev;
+
+    /**
      * @param motor the bare motor
      * @param diameter diameter of the wheel in centimeters
      */
     public DriveMotor(DcMotor motor, double diameter) {
         this.motor = motor;
         this.diameter = diameter;
+        this.ticksPerRev = this.motor.getMotorType().getTicksPerRev();
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
@@ -44,7 +48,7 @@ public class DriveMotor {
      */
     public void rotate(double degrees) {
         int current = this.motor.getCurrentPosition();
-        int clicks = (int) (degrees / 360) * CLICKS_PER_ROTATION;
+        int clicks = (int) ((degrees / 360) * ticksPerRev);
         this.motor.setTargetPosition(current + clicks);
     }
 
