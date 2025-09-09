@@ -2,6 +2,11 @@ package com.lexingtonchristian.ftc.motor;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+/**
+ * A wrapper class for a {@link com.qualcomm.robotcore.hardware.DcMotor} that provides multiple
+ * extra utilities to the end user, such as rotating a certain number of degrees or driving
+ * a particular distance based on the diameter of the wheel attached to the motor.
+ */
 public class DriveMotor {
 
     /**
@@ -44,7 +49,7 @@ public class DriveMotor {
     /**
      * Turns the motor a number of degrees.
      *
-     * @param degrees number of degrees to turn the motor
+     * @param degrees angle to turn in degrees
      */
     public void rotate(double degrees) {
         int current = this.motor.getCurrentPosition();
