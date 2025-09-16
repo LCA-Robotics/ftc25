@@ -10,38 +10,34 @@ import com.qualcomm.robotcore.hardware.IMU;
 @TeleOp
 public class Main extends LinearOpMode {
 
-    private DriveMotor backLeft;
-    private DriveMotor frontLeft;
-    private DriveMotor backRight;
-    private DriveMotor frontRight;
-
-    private Drive.Side left;
-    private Drive.Side right;
-    private Drive drive;
-
-    private IMU imu;
+    private DcMotor backLeft;
+    private DcMotor frontLeft;
+    private DcMotor backRight;
+    private DcMotor frontRight;
 
     @Override
     public void runOpMode() {
 
-        double wheelDiameter = 3.0;
-
-        this.backLeft = new DriveMotor(hardwareMap.get(DcMotor.class, "back_left"), wheelDiameter);
-        this.frontLeft = new DriveMotor(hardwareMap.get(DcMotor.class, "front_left"), wheelDiameter);
-        this.backRight = new DriveMotor(hardwareMap.get(DcMotor.class, "back_right"), wheelDiameter);
-        this.frontRight = new DriveMotor(hardwareMap.get(DcMotor.class, "front_right"), wheelDiameter);
-
-        this.left = new Drive.Side(this.backLeft, this.frontLeft);
-        this.right = new Drive.Side(this.backRight, this.frontRight);
-
-        this.drive = new Drive(this.left, this.left, 100.0);
-
-        imu = hardwareMap.get(IMU.class, "imu");
+        this.backLeft = hardwareMap.get(DcMotor.class, "back_left");
+        this.frontLeft = hardwareMap.get(DcMotor.class, "front_left");
+        this.backRight = hardwareMap.get(DcMotor.class, "back_right");
+        this.frontRight = hardwareMap.get(DcMotor.class, "front_right");
 
         waitForStart();
 
-        this.drive.turnStationary(90.0);
+        double stickY = this.gamepad1.right_stick_y;
+        double stickX = this.gamepad1.right_stick_x;
 
+        double leftPower = clamp(stickY - stickX, -1.0, 1.0);
+        double rightPower = clamp(stickY + stickX, -1.0, 1.0);
+        
+        this.backRight.setPower(rightPower);
+        this.backLeft.setPower(leftPower);
+
+    }
+
+    private double clamp(double val, double min, double max) {
+        return val < min ? min : (Math.min(val, max));
     }
 
 }
