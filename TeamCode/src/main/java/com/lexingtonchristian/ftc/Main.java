@@ -25,8 +25,8 @@ public class Main extends LinearOpMode {
 
         waitForStart();
 
-        double stickY = this.gamepad1.right_stick_y;
-        double stickX = this.gamepad1.right_stick_x;
+        double stickY = this.gamepad1.left_stick_y;
+        double stickX = this.gamepad1.left_stick_x;
 
         double leftPower = clamp(stickY - stickX, -1.0, 1.0);
         double rightPower = clamp(stickY + stickX, -1.0, 1.0);
