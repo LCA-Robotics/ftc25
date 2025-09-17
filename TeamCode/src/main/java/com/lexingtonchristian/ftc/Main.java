@@ -25,17 +25,19 @@ public class Main extends LinearOpMode {
 
         waitForStart();
 
+        while (this.opModeIsActive()) {
 
+            double mult = this.gamepad1.rightBumperWasReleased() ? 1 : (this.gamepad1.rightBumperWasPressed() ? 0.2 : 1);
 
-        double stickY = this.gamepad1.left_stick_y;
-        double stickX = this.gamepad1.left_stick_x;
+            double stickY = this.gamepad1.left_stick_y;
+            double stickX = this.gamepad1.left_stick_x;
 
-        double leftPower = clamp(stickX - stickY, -1.0, 1.0);
-        double rightPower = clamp(stickX + stickY, -1.0, 1.0);
+            double leftPower = clamp(stickX - stickY, -1.0, 1.0);
+            double rightPower = clamp(stickX + stickY, -1.0, 1.0);
 
-        this.backRight.setPower(rightPower);
-        this.backLeft.setPower(leftPower);
-
+            this.backRight.setPower(rightPower * mult);
+            this.backLeft.setPower(leftPower * mult);
+        }
     }
 
     private double clamp(double val, double min, double max) {
