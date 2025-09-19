@@ -27,7 +27,7 @@ public class Main extends LinearOpMode {
 
         while (this.opModeIsActive()) {
 
-            double mult = this.gamepad1.rightBumperWasReleased() ? 1 : (this.gamepad1.rightBumperWasPressed() ? 0.2 : 1);
+            double mult = this.gamepad1.right_bumper ? 0.2 : 1.0;
 
             double stickY = this.gamepad1.left_stick_y;
             double stickX = this.gamepad1.left_stick_x;
@@ -41,7 +41,7 @@ public class Main extends LinearOpMode {
     }
 
     private double clamp(double val, double min, double max) {
-        return val < min ? min : (Math.min(val, max));
+        return Math.max(min, (Math.min(val, max)));
     }
 
 }
