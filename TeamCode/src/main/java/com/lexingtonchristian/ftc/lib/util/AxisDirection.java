@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.util;
+package com.lexingtonchristian.ftc.lib.util;
 
 /**
  * A direction for an axis to be remapped to

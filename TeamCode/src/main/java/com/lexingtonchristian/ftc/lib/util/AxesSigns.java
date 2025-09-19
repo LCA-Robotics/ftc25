@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.util;
+package com.lexingtonchristian.ftc.lib.util;
 
 /**
  * IMU axes signs in the order XYZ (after remapping).

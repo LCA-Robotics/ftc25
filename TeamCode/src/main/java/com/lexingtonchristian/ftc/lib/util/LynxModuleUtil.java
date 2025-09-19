@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.util;
+package com.lexingtonchristian.ftc.lib.util;
 
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;

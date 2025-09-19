@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.trajectorysequence;
+package com.lexingtonchristian.ftc.lib.trajectorysequence;
 
 import androidx.annotation.Nullable;
 
@@ -17,13 +17,13 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TrajectorySegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TurnSegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.WaitSegment;
-import org.firstinspires.ftc.teamcode.util.DashboardUtil;
-import org.firstinspires.ftc.teamcode.util.LogFiles;
+import com.lexingtonchristian.ftc.lib.drive.DriveConstants;
+import com.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.SequenceSegment;
+import com.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.TrajectorySegment;
+import com.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.TurnSegment;
+import com.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.WaitSegment;
+import com.lexingtonchristian.ftc.lib.util.DashboardUtil;
+import com.lexingtonchristian.ftc.lib.util.LogFiles;
 
 import java.util.ArrayList;
 import java.util.Collections;

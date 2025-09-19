@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.trajectorysequence;
+package com.lexingtonchristian.ftc.lib.trajectorysequence;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -19,10 +19,11 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAcceleration
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.util.Angle;
 
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TrajectorySegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TurnSegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.WaitSegment;
+import com.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.SequenceSegment;
+import com.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.TurnSegment;
+
+import com.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.TrajectorySegment;
+import com.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.WaitSegment;
 
 import java.util.ArrayList;
 import java.util.Collections;
