@@ -24,16 +24,6 @@ public class SimpleDrive extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        AprilTagProcessor tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
-        VisionPortal portal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, "webcam"))
-                .addProcessor(tagProcessor)
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .setCameraResolution(new Size(1920, 1080))
-                .build();
-        PtzControl.PanTiltHolder tiltHolder = new PtzControl.PanTiltHolder();
-
-
         this.backLeft = hardwareMap.get(DcMotor.class, "leftRear");
         this.frontLeft = hardwareMap.get(DcMotor.class, "leftFront");
         this.backRight = hardwareMap.get(DcMotor.class, "rightRear");
