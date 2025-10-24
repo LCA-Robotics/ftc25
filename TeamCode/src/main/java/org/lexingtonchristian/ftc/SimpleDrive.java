@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.lexingtonchristian.ftc.util.MathHelper;
+
 @TeleOp
 public class SimpleDrive extends LinearOpMode {
 
@@ -24,16 +26,16 @@ public class SimpleDrive extends LinearOpMode {
 
         while (this.opModeIsActive()) {
 
-            double mult = this.gamepad1.right_bumper ? 0.2 : 1.0;
+            double mult = this.gamepad1.right_bumper ? 0.2 : 0.5;
 
             double leftStickY = this.gamepad1.left_stick_y;
             double leftStickX = this.gamepad1.left_stick_x;
             double rightStickX = this.gamepad1.right_stick_x;
 
-            double backLeftPower = clamp((leftStickX + leftStickY) - rightStickX, -1.0, 1.0);
-            double backRightPower = clamp((leftStickX - leftStickY) + rightStickX, -1.0, 1.0);
-            double frontLeftPower = clamp((leftStickX - leftStickY) - rightStickX, -1.0, 1.0);
-            double frontRightPower = clamp((leftStickX + leftStickY) + rightStickX, -1.0, 1.0);
+            double backLeftPower = MathHelper.clamp((leftStickX + leftStickY) - rightStickX, -1.0, 1.0);
+            double backRightPower = MathHelper.clamp((leftStickX - leftStickY) + rightStickX, -1.0, 1.0);
+            double frontLeftPower = MathHelper.clamp((leftStickX - leftStickY) - rightStickX, -1.0, 1.0);
+            double frontRightPower = MathHelper.clamp((leftStickX + leftStickY) + rightStickX, -1.0, 1.0);
 
             this.backLeft.setPower(backLeftPower * mult);
             this.backRight.setPower(backRightPower * mult * -1);
@@ -44,8 +46,6 @@ public class SimpleDrive extends LinearOpMode {
 
     }
 
-    private double clamp(double val, double min, double max) {
-        return Math.max(min, (Math.min(val, max)));
-    }
+
 
 }

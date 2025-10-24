@@ -1,35 +1,45 @@
-package org.lexingtonchristian.ftc.lib;
+package org.lexingtonchristian.ftc;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.lexingtonchristian.ftc.util.MathHelper;
+
 @TeleOp
 public class TestLauncher extends LinearOpMode {
+
     private DcMotor launcherLeft;
     private DcMotor launcherRight;
-    private Servo launcherServo;
+    private CRServo launcherServo;
 
     @Override
     public void runOpMode() {
 
-        this.launcherLeft = hardwareMap.get(DcMotor.class, "launcherLeft");
-        this.launcherRight = hardwareMap.get(DcMotor.class, "launcherRight");
-        this.launcherServo = hardwareMap.get(Servo.class, "launcherServo");
+        this.launcherLeft = hardwareMap.get(DcMotor.class, "leftLauncher");
+        this.launcherRight = hardwareMap.get(DcMotor.class, "rightLauncher");
+        this.launcherServo = hardwareMap.get(CRServo.class, "launcherServo");
 
         this.launcherLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
-        launcherLeft.setPower(0.5);
-        launcherRight.setPower(0.5);
+        while (this.opModeIsActive()) {
 
-        Servo.Direction launch = this.gamepad1.x ? Servo.Direction.FORWARD : null;
+            double power = MathHelper.clamp(this.gamepad1.right_trigger, 0.0, 0.4);
 
-        launcherServo.setDirection(launch);
+            this.launcherLeft.setPower(power);
+            this.launcherRight.setPower(power);
+
+
+
+        }
+
     }
+
 }
