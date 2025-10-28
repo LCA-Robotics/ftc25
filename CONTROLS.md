@@ -5,8 +5,12 @@ CONTROLS
 - Right Stick
   - Rotation
 - X
-  - Launch one ball
+  - Align to goal
+- B
+  - Launch ball
 - Right Bumper
   - Slow the robot's movement
 - Left Bumper
   - N/A
+- Right Trigger
+  - Launcher throttle
