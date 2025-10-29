@@ -17,6 +17,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.lexingtonchristian.ftc.lib.drive.SampleMecanumDrive;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.stream.Collectors;
 
@@ -64,7 +65,7 @@ public class PrimaryAuto extends LinearOpMode {
 
         waitForStart();
 
-        drive.setMotorPowers(.75, .75, .75, .75);
+        drive.setMotorPowers(0.6, 0.6, 0.6, 0.6);
 
         while (this.opModeIsActive()) {
 
@@ -73,17 +74,18 @@ public class PrimaryAuto extends LinearOpMode {
                     .stream()
                     .anyMatch(tag -> tag.id == 24);
             if (numBalls > 0 && canSeeRedGoal) {
+                for (AprilTagDetection detection : getAprilTags()) {
+                    telemetry.addLine(String.format(Locale.ENGLISH, "Range: %2f",
+                            detection.ftcPose.range));
+                }
                 AprilTagDetection redGoal = this.getAprilTags()
                         .stream()
                         .filter(tag -> tag.id == 24)
                         .findFirst().orElse(null);
                 if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 32) continue;
-                else if (redGoal.ftcPose.range >= 32) {
-                    drive.setMotorPowers(0, 0, 0, 0);
-                    launch(0.45);
-                }
-
+                drive.setMotorPowers(0, 0, 0, 0);
+                launch(0.45);
             }
         }
     }
