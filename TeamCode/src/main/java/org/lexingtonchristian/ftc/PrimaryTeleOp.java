@@ -88,11 +88,12 @@ public class PrimaryTeleOp extends LinearOpMode {
             while (true) {
 
                 Optional<AprilTagDetection> goal = this.getTag(RED_GOAL);
-                if (!goal.isPresent()) continue;
+                if (!goal.isPresent()) break;
 
                 double bearing = goal.get().ftcPose.bearing;
 
-                if (-20.0 < bearing && bearing < 20.0) {
+                double tolerance = 5.0;
+                if (-tolerance < bearing && bearing < tolerance) {
                     stopAll();
                     break;
                 }
