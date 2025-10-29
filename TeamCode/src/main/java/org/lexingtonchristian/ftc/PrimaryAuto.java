@@ -34,17 +34,16 @@ public class PrimaryAuto extends LinearOpMode {
     private DcMotor frontRight;
 
     // AprilTag Processor
-    private AprilTagProcessor tagProcessor;
+    private AprilTagProcessor tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
     private WebcamName webcam;
     private VisionPortal portal;
     private int numBalls = 1;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        initialize();
         // Assign launcher motors + servo to hardwaremap
-        this.launcherLeft = hardwareMap.get(DcMotor.class, "launcherLeft");
-        this.launcherRight = hardwareMap.get(DcMotor.class, "launcherRight");
+        this.launcherLeft = hardwareMap.get(DcMotor.class, "leftLauncher");
+        this.launcherRight = hardwareMap.get(DcMotor.class, "rightLauncher");
         this.launcherServo = hardwareMap.get(CRServo.class, "launcherServo");
 
         // Assign drive motors to hardwaremap
@@ -65,18 +64,20 @@ public class PrimaryAuto extends LinearOpMode {
 
         waitForStart();
 
-        drive.setMotorPowers(-1, -1, -1, -1);
+        drive.setMotorPowers(.5, .5, .5, .5);
 
         while (this.opModeIsActive()) {
-            AprilTagDetection redGoal = this.getAprilTags()
-                    .stream()
-                    .filter(tag -> tag.id == 24)
-                    .findFirst().get();
+
             boolean canSeeRedGoal = this
                     .getAprilTags()
                     .stream()
                     .anyMatch(tag -> tag.id == 24);
-            if (numBalls > 0 && canSeeRedGoal && redGoal.ftcPose.range >= 32) {
+            if (numBalls > 0 && canSeeRedGoal) {
+                AprilTagDetection redGoal = this.getAprilTags()
+                        .stream()
+                        .filter(tag -> tag.id == 24)
+                        .findFirst().get();
+                if (redGoal.ftcPose.range < 32) continue;
                 drive.setMotorPowers(0, 0, 0, 0);
                 launch(0.45);
 
@@ -99,6 +100,8 @@ public class PrimaryAuto extends LinearOpMode {
         launcherServo.setPower(1.0);
         sleep(500);
         launcherServo.setPower(0.0);
+        launcherLeft.setPower(0.0);
+        launcherRight.setPower(0.0);
         numBalls -= 1;
     }
 
