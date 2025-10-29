@@ -64,7 +64,7 @@ public class PrimaryAuto extends LinearOpMode {
 
         waitForStart();
 
-        drive.setMotorPowers(.5, .5, .5, .5);
+        drive.setMotorPowers(.75, .75, .75, .75);
 
         while (this.opModeIsActive()) {
 
@@ -79,8 +79,10 @@ public class PrimaryAuto extends LinearOpMode {
                         .findFirst().orElse(null);
                 if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 32) continue;
-                drive.setMotorPowers(0, 0, 0, 0);
-                launch(0.45);
+                else if (redGoal.ftcPose.range >= 32) {
+                    drive.setMotorPowers(0, 0, 0, 0);
+                    launch(0.45);
+                }
 
             }
         }
