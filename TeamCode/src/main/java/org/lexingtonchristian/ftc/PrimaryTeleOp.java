@@ -13,19 +13,38 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.lexingtonchristian.ftc.lib.util.Encoder;
+import org.lexingtonchristian.ftc.util.Drivetrain;
 import org.lexingtonchristian.ftc.util.MathHelper;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.lexingtonchristian.ftc.util.TagDetector;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- *
- * {@code backRight}  - {@code Port 0}, {@code Control Hub} <br/>
- * {@code backLeft}   - {@code Port 1}, {@code Control Hub} <br/>
- * {@code frontRight} - {@code Port 2}, {@code Control Hub} <br/>
- * {@code frontLeft}  - {@code Port 3}, {@code Control Hub}
+ * <table border="1">
+ *     <tr>
+ *         <td><b>Port</b></td>
+ *         <td><b>Motor</b></td>
+ *     </tr>
+ *     <tr>
+ *         <td>0</td>
+ *         <td>backRight</td>
+ *     </tr>
+ *     <tr>
+ *         <td>1</td>
+ *         <td>backLeft</td>
+ *     </tr>
+ *     <tr>
+ *         <td>2</td>
+ *         <td>frontRight</td>
+ *     </tr>
+ *     <tr>
+ *         <td>3</td>
+ *         <td>frontLeft</td>
+ *     </tr>
+ * </table>
  *
  */
 
@@ -43,39 +62,43 @@ public class PrimaryTeleOp extends LinearOpMode {
     private DcMotor launcherRight;
     private CRServo launcherServo;
 
-    private DcMotor backLeft;
-    private DcMotor frontLeft;
-    private DcMotor backRight;
-    private DcMotor frontRight;
+    private Drivetrain drivetrain;
 
     private AprilTagProcessor tagProcessor;
     private WebcamName webcam;
     private VisionPortal portal;
 
+    private TagDetector detector;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
+        // Run all hardware setup & initialization
         hardwareInit();
 
         waitForStart();
 
         while (this.opModeIsActive()) {
 
-            double power = MathHelper.clamp(this.gamepad1.right_trigger, 0.0, 0.4);
-            double mult = this.gamepad1.right_bumper ? 0.2 : 0.7;
+            // Set launcher power (max of 45%)
+            double launchPower = MathHelper.clamp(this.gamepad1.right_trigger, 0.0, 0.45);
 
-            double lX = this.gamepad1.left_stick_x;
-            double lY = this.gamepad1.left_stick_y;
-            double rX = this.gamepad1.right_stick_x;
+            // If slowed, run at 20% speed; else, run at 70%
+            double speedLimit = this.gamepad1.right_bumper ? 0.2 : 0.7;
 
-            this.backLeft.setPower(left(lY + lX, rX) * mult);
-            this.frontLeft.setPower(left(lY - lX, rX) * mult);
+            double leftX = this.gamepad1.left_stick_x;  // left stick X
+            double leftY = this.gamepad1.left_stick_y;  // left stick Y
+            double rightX = this.gamepad1.right_stick_x; // right stick X
 
-            this.backRight.setPower(right(lY - lX, rX) * mult);
-            this.frontRight.setPower(right(lY + lX, rX) * mult);
+            this.drivetrain.move(
+                    -leftX,
+                    -leftY,
+                    -rightX,
+                    speedLimit
+            );
 
-            this.launcherLeft.setPower(power);
-            this.launcherRight.setPower(power);
+            this.launcherLeft.setPower(launchPower);
+            this.launcherRight.setPower(launchPower);
 
             if (this.gamepad1.b) {
                 this.launcherServo.setPower(0.7);
@@ -83,61 +106,15 @@ public class PrimaryTeleOp extends LinearOpMode {
                 this.launcherServo.setPower(0.0);
             }
 
-            if (!this.gamepad1.x) continue;
-
-            while (true) {
-
-                Optional<AprilTagDetection> goal = this.getTag(RED_GOAL);
-                if (!goal.isPresent()) break;
-
-                double bearing = goal.get().ftcPose.bearing;
-
-                double tolerance = 5.0;
-                if (-tolerance < bearing && bearing < tolerance) {
-                    stopAll();
-                    break;
-                }
-
-                if (bearing < 0) {
-                    rotate(0.3, Direction.LEFT);
-                } else if (bearing > 0) {
-                    rotate(0.3, Direction.RIGHT);
-                }
-
+            if (this.gamepad1.x && this.detector.hasTag(RED_GOAL)) {
+                this.drivetrain.center(5.0, () -> {
+                    Optional<AprilTagDetection> goal = this.detector.getTag(RED_GOAL);
+                    return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
+                });
             }
 
         }
 
-    }
-
-    private void rotate(double power, Direction direction) {
-        switch (direction) {
-            case LEFT:
-                this.backLeft.setPower(-power);
-                this.frontLeft.setPower(-power);
-                this.backRight.setPower(power);
-                this.frontRight.setPower(power);
-            case RIGHT:
-                this.backLeft.setPower(power);
-                this.frontLeft.setPower(power);
-                this.backRight.setPower(-power);
-                this.frontRight.setPower(-power);
-        }
-    }
-
-    private void stopAll() {
-        this.backLeft.setPower(0.0);
-        this.frontLeft.setPower(0.0);
-        this.backRight.setPower(0.0);
-        this.frontRight.setPower(0.0);
-    }
-
-    private double left(double move, double rX) {
-        return MathHelper.clamp(move - rX, -1.0, 1.0);
-    }
-
-    private double right(double move, double rX) {
-        return MathHelper.clamp(move + rX, -1.0, 1.0);
     }
 
     private void hardwareInit() {
@@ -146,16 +123,15 @@ public class PrimaryTeleOp extends LinearOpMode {
         this.launcherRight = hardwareMap.get(DcMotor.class, "rightLauncher");
         this.launcherServo = hardwareMap.get(CRServo.class, "launcherServo");
 
-        this.backRight = hardwareMap.get(DcMotor.class, "backRight");
-        this.backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        this.frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        this.frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        this.drivetrain = new Drivetrain(
+                hardwareMap.get(DcMotor.class, "backRight"),
+                hardwareMap.get(DcMotor.class, "backLeft"),
+                hardwareMap.get(DcMotor.class, "frontRight"),
+                hardwareMap.get(DcMotor.class, "frontLeft")
+        );
 
         this.launcherLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         this.launcherServo.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         this.webcam = hardwareMap.get(WebcamName.class, "webcam");
@@ -166,26 +142,8 @@ public class PrimaryTeleOp extends LinearOpMode {
                 .setCameraResolution(new Size(640, 360))
                 .build();
 
-    }
+        this.detector = new TagDetector(this.tagProcessor, this.portal);
 
-    private Optional<AprilTagDetection> getTag(int id) {
-        return this.getAprilTags()
-                .stream()
-                .filter(tag -> tag.id == id)
-                .findFirst();
-    }
-
-    private List<AprilTagDetection> getAprilTags() {
-        List<AprilTagDetection> detections = this.tagProcessor.getDetections();
-        return detections
-                .stream()
-                .filter(tag -> 20 <= tag.id && tag.id <= 24)
-                .collect(Collectors.toList());
-    }
-
-    private enum Direction {
-        LEFT,
-        RIGHT
     }
 
 }
