@@ -17,6 +17,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.lexingtonchristian.ftc.lib.drive.SampleMecanumDrive;
+import org.lexingtonchristian.ftc.util.Drivetrain;
 
 import java.util.List;
 import java.util.Locale;
@@ -74,11 +75,11 @@ public class PrimaryAuto extends LinearOpMode {
                 .setCameraResolution(new Size(640, 360))
                 .build();
 
-        MecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        Drivetrain drive = new Drivetrain(backRight, backLeft, frontRight, frontLeft);
 
         waitForStart();
 
-        drive.setMotorPowers(0.55, 0.55, 0.55, 0.55);
+        drive.move(-0.55, 0, 0);
 
         while (this.opModeIsActive()) {
 
@@ -97,7 +98,7 @@ public class PrimaryAuto extends LinearOpMode {
                         .findFirst().orElse(null);
                 if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 40) continue;
-                drive.setMotorPowers(0, 0, 0, 0);
+                drive.zero();
                 launch(0.37);
             }
         }
