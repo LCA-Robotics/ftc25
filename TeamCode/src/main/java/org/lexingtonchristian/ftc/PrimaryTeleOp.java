@@ -79,14 +79,15 @@ public class PrimaryTeleOp extends LinearOpMode {
                         .filter(tag -> tag.id == 24)
                         .findFirst().get();
                 double bearing = redGoal.ftcPose.bearing;
-                while (!(-0.01 < bearing && bearing < 0.01)) {
+                while (!(-1 < bearing && bearing < 1)) {
                     if (bearing < 0) {
-                        rotate(0.3, Direction.RIGHT);
-                    } else if (bearing > 0) {
                         rotate(0.3, Direction.LEFT);
+                    } else if (bearing > 0) {
+                        rotate(0.3, Direction.RIGHT);
                     }
                     bearing = redGoal.ftcPose.bearing;
                 }
+                stopAll();
             }
 
             if (this.gamepad1.b) {
@@ -112,6 +113,13 @@ public class PrimaryTeleOp extends LinearOpMode {
                 this.backRight.setPower(-power);
                 this.frontRight.setPower(-power);
         }
+    }
+
+    private void stopAll() {
+        this.backLeft.setPower(0.0);
+        this.frontLeft.setPower(0.0);
+        this.backRight.setPower(0.0);
+        this.frontRight.setPower(0.0);
     }
 
     private double left(double move, double rX) {
