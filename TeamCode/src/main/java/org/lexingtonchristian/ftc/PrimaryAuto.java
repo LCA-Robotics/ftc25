@@ -3,6 +3,8 @@ package org.lexingtonchristian.ftc;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
+import android.util.Size;
+
 import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -60,6 +62,17 @@ public class PrimaryAuto extends LinearOpMode {
         // Reverse drive motors
         this.backRight.setDirection(REVERSE);
         this.frontRight.setDirection(REVERSE);
+
+        // Add webcam
+        this.webcam = hardwareMap.get(WebcamName.class, "webcam");
+
+        // Add VisionPortal
+        this.portal = new VisionPortal.Builder()
+                .setCamera(webcam)
+                .addProcessor(tagProcessor)
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+                .setCameraResolution(new Size(640, 360))
+                .build();
 
         MecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
