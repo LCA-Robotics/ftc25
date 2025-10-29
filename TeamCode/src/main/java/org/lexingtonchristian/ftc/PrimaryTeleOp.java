@@ -17,6 +17,7 @@ import org.lexingtonchristian.ftc.util.MathHelper;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +31,13 @@ import java.util.stream.Collectors;
 
 @TeleOp
 public class PrimaryTeleOp extends LinearOpMode {
+
+    private static final int BLU_GOAL = 20;
+    private static final int RED_GOAL = 24;
+
+    private static final int GPP = 21;
+    private static final int PGP = 22;
+    private static final int PPG = 23;
 
     private DcMotor launcherLeft;
     private DcMotor launcherRight;
@@ -69,31 +77,32 @@ public class PrimaryTeleOp extends LinearOpMode {
             this.launcherLeft.setPower(power);
             this.launcherRight.setPower(power);
 
-            boolean canSeeRedGoal = this
-                    .getAprilTags()
-                    .stream()
-                    .anyMatch(tag -> tag.id == 24);
-            if (this.gamepad1.x && canSeeRedGoal) {
-                AprilTagDetection redGoal = this.getAprilTags()
-                        .stream()
-                        .filter(tag -> tag.id == 24)
-                        .findFirst().get();
-                double bearing = redGoal.ftcPose.bearing;
-                while (!(-1 < bearing && bearing < 1)) {
-                    if (bearing < 0) {
-                        rotate(0.3, Direction.LEFT);
-                    } else if (bearing > 0) {
-                        rotate(0.3, Direction.RIGHT);
-                    }
-                    bearing = redGoal.ftcPose.bearing;
-                }
-                stopAll();
-            }
-
             if (this.gamepad1.b) {
                 this.launcherServo.setPower(0.7);
             } else {
                 this.launcherServo.setPower(0.0);
+            }
+
+            if (!this.gamepad1.x) continue;
+
+            while (true) {
+
+                Optional<AprilTagDetection> goal = this.getTag(RED_GOAL);
+                if (!goal.isPresent()) continue;
+
+                double bearing = goal.get().ftcPose.bearing;
+
+                if (-20.0 < bearing && bearing < 20.0) {
+                    stopAll();
+                    break;
+                }
+
+                if (bearing < 0) {
+                    rotate(0.3, Direction.LEFT);
+                } else if (bearing > 0) {
+                    rotate(0.3, Direction.RIGHT);
+                }
+
             }
 
         }
@@ -156,6 +165,13 @@ public class PrimaryTeleOp extends LinearOpMode {
                 .setCameraResolution(new Size(640, 360))
                 .build();
 
+    }
+
+    private Optional<AprilTagDetection> getTag(int id) {
+        return this.getAprilTags()
+                .stream()
+                .filter(tag -> tag.id == id)
+                .findFirst();
     }
 
     private List<AprilTagDetection> getAprilTags() {
