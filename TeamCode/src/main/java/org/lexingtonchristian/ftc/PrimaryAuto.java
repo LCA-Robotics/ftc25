@@ -76,7 +76,8 @@ public class PrimaryAuto extends LinearOpMode {
                 AprilTagDetection redGoal = this.getAprilTags()
                         .stream()
                         .filter(tag -> tag.id == 24)
-                        .findFirst().get();
+                        .findFirst().orElse(null);
+                if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 32) continue;
                 drive.setMotorPowers(0, 0, 0, 0);
                 launch(0.45);
