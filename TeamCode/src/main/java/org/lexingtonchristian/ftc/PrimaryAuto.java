@@ -1,29 +1,22 @@
 package org.lexingtonchristian.ftc;
 
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 import android.util.Size;
 
-import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.lexingtonchristian.ftc.lib.drive.SampleMecanumDrive;
 import org.lexingtonchristian.ftc.util.Drivetrain;
 import org.lexingtonchristian.ftc.util.TagDetector;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Autonomous
 public class PrimaryAuto extends LinearOpMode {
@@ -42,6 +35,8 @@ public class PrimaryAuto extends LinearOpMode {
     private AprilTagProcessor tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
     private WebcamName webcam;
     private VisionPortal portal;
+
+    // Default number of balls in index
     private int numBalls = 3;
 
     @Override
@@ -89,10 +84,6 @@ public class PrimaryAuto extends LinearOpMode {
         while (this.opModeIsActive()) {
             boolean canSeeRedGoal = tagDetector.hasTag(24);
             if (numBalls > 0 && canSeeRedGoal) {
-                for (AprilTagDetection detection : tagDetector.getAprilTags()) {
-                    telemetry.addLine(String.format(Locale.ENGLISH, "Range: %2f",
-                            detection.ftcPose.range));
-                }
                 AprilTagDetection redGoal = tagDetector
                         .getTag(24)
                         .orElse(null);
@@ -100,36 +91,29 @@ public class PrimaryAuto extends LinearOpMode {
                 if (redGoal.ftcPose.range < 40) continue;
                 drive.zero();
                 launch(0.37, 3);
+                drive.center(5.0, () -> {
+                        Optional<AprilTagDetection> goal = tagDetector.getTag(24);
+                        return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
+                });
             }
         }
     }
 
     private void launch(double power, int shots) {
         for (int i = shots; i > 0; i--) {
-            launcherLeft.setPower(power);
-            launcherRight.setPower(power);
+            this.launcherLeft.setPower(power);
+            this.launcherRight.setPower(power);
             sleep(1500);
-            launcherServo.setPower(1.0);
+            this.launcherServo.setPower(1.0);
             sleep(500);
-            launcherServo.setPower(0.0);
+            this.launcherServo.setPower(0.0);
             sleep(1000);
             if (i == 1) {
-                launcherLeft.setPower(0.0);
-                launcherRight.setPower(0.0);
+                this.launcherLeft.setPower(0.0);
+                this.launcherRight.setPower(0.0);
             }
             numBalls -= 1;
         }
-    }
-
-    private void initialize() {
-        this.enhanced(launcherLeft).setVelocityPIDFCoefficients(4, 0.5, 0, 11.7);
-        this.enhanced(launcherRight).setVelocityPIDFCoefficients(4, 0.5, 0, 11.7);
-        this.launcherLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.launcherRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    private DcMotorEx enhanced(DcMotor motor) {
-        return (DcMotorEx) motor;
     }
 
 }
