@@ -96,10 +96,10 @@ public class PrimaryAuto extends LinearOpMode {
     }
 
     private void launch(double power, int shots) {
+        this.launcherLeft.setPower(power);
+        this.launcherRight.setPower(power);
+        sleep(1500);
         for (int i = shots; i > 0; i--) {
-            this.launcherLeft.setPower(power);
-            this.launcherRight.setPower(power);
-            sleep(1500);
             this.launcherServo.setPower(1.0);
             sleep(500);
             this.launcherServo.setPower(0.0);
