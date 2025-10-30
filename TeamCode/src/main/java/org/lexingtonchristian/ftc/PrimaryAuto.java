@@ -35,9 +35,9 @@ public class PrimaryAuto extends LinearOpMode {
     private static final int PPG = 23;
 
     private static final Map<Integer, Integer> DISTANCES = Map.of(
-            GPP, 10,
-            PGP, 20,
-            PPG, 30
+            GPP, 1000,
+            PGP, 2000,
+            PPG, 3000
     );
 
     // Launcher motors + servo
@@ -121,8 +121,15 @@ public class PrimaryAuto extends LinearOpMode {
                 drive.zero();
                 sleep(100);
                 drive.rotate(90);
-
             }
+
+            Optional<AprilTagDetection> obelisk = tagDetector.getObelisk();
+
+            if (!obelisk.isPresent()) continue;
+            int obeliskID = obelisk.get().id;
+            drive.move(0, 0.55, 0);
+            sleep(DISTANCES.get(obeliskID));
+            drive.zero();
         }
     }
 
