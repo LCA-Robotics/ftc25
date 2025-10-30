@@ -90,11 +90,11 @@ public class PrimaryAuto extends LinearOpMode {
                 if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 40) continue;
                 drive.zero();
-                launch(0.37, 3);
                 drive.center(5.0, () -> {
-                        Optional<AprilTagDetection> goal = tagDetector.getTag(24);
-                        return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
+                    Optional<AprilTagDetection> goal = tagDetector.getTag(24);
+                    return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
                 });
+                launch(0.37, 3);
             }
         }
     }
