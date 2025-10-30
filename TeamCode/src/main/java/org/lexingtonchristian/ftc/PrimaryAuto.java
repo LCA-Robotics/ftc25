@@ -18,6 +18,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.lexingtonchristian.ftc.lib.drive.SampleMecanumDrive;
 import org.lexingtonchristian.ftc.util.Drivetrain;
+import org.lexingtonchristian.ftc.util.TagDetector;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +42,7 @@ public class PrimaryAuto extends LinearOpMode {
     private AprilTagProcessor tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
     private WebcamName webcam;
     private VisionPortal portal;
-    private int numBalls = 1;
+    private int numBalls = 3;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -75,53 +76,49 @@ public class PrimaryAuto extends LinearOpMode {
                 .setCameraResolution(new Size(640, 360))
                 .build();
 
+        // Create Drivetrain
         Drivetrain drive = new Drivetrain(backRight, backLeft, frontRight, frontLeft);
+
+        // Create TagDetector
+        TagDetector tagDetector = new TagDetector(tagProcessor, portal);
 
         waitForStart();
 
         drive.move(-0.55, 0, 0);
 
         while (this.opModeIsActive()) {
-
-            boolean canSeeRedGoal = this
-                    .getAprilTags()
-                    .stream()
-                    .anyMatch(tag -> tag.id == 24);
+            boolean canSeeRedGoal = tagDetector.hasTag(24);
             if (numBalls > 0 && canSeeRedGoal) {
-                for (AprilTagDetection detection : getAprilTags()) {
+                for (AprilTagDetection detection : tagDetector.getAprilTags()) {
                     telemetry.addLine(String.format(Locale.ENGLISH, "Range: %2f",
                             detection.ftcPose.range));
                 }
-                AprilTagDetection redGoal = this.getAprilTags()
-                        .stream()
-                        .filter(tag -> tag.id == 24)
-                        .findFirst().orElse(null);
+                AprilTagDetection redGoal = tagDetector
+                        .getTag(24)
+                        .orElse(null);
                 if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 40) continue;
                 drive.zero();
-                launch(0.37);
+                launch(0.37, 3);
             }
         }
     }
 
-    private List<AprilTagDetection> getAprilTags() {
-        List<AprilTagDetection> detections = this.tagProcessor.getDetections();
-        return detections
-                .stream()
-                .filter(tag -> 20 <= tag.id && tag.id <= 24)
-                .collect(Collectors.toList());
-    }
-
-    private void launch(double power) {
-        launcherLeft.setPower(power);
-        launcherRight.setPower(power);
-        sleep(1500);
-        launcherServo.setPower(1.0);
-        sleep(500);
-        launcherServo.setPower(0.0);
-        launcherLeft.setPower(0.0);
-        launcherRight.setPower(0.0);
-        numBalls -= 1;
+    private void launch(double power, int shots) {
+        for (int i = shots; i > 0; i--) {
+            launcherLeft.setPower(power);
+            launcherRight.setPower(power);
+            sleep(1500);
+            launcherServo.setPower(1.0);
+            sleep(500);
+            launcherServo.setPower(0.0);
+            sleep(1000);
+            if (i == 1) {
+                launcherLeft.setPower(0.0);
+                launcherRight.setPower(0.0);
+            }
+            numBalls -= 1;
+        }
     }
 
     private void initialize() {
