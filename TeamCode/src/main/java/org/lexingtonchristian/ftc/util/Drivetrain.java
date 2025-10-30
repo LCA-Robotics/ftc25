@@ -31,7 +31,7 @@ public class Drivetrain {
 
     public void center(double tolerance, Supplier<Double> bearing) {
         while (tolerance < bearing.get() || bearing.get() < -tolerance) {
-            rotate(Double.parseDouble(TWO_DECIMALS.format(bearing.get() * -0.01)));
+            rotate(Double.parseDouble(TWO_DECIMALS.format(bearing.get() * -0.02)));
         }
         zero();
     }
