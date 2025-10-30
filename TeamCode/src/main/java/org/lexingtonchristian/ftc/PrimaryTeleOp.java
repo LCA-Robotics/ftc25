@@ -115,8 +115,8 @@ public class PrimaryTeleOp extends LinearOpMode {
     private void hardwareInit() {
 
         this.launcher = new Launcher(
-                hardwareMap.get(DcMotor.class, "leftLauncher"),
-                hardwareMap.get(DcMotor.class, "rightLauncher"),
+                hardwareMap.get(DcMotor.class, "launcherLeft"),
+                hardwareMap.get(DcMotor.class, "launcherRight"),
                 hardwareMap.get(CRServo.class, "launcherServo")
         );
 
