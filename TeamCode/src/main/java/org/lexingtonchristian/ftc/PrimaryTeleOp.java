@@ -60,13 +60,7 @@ public class PrimaryTeleOp extends LinearOpMode {
     private static final int PPG = 23;
 
     private Launcher launcher;
-
     private Drivetrain drivetrain;
-
-    private AprilTagProcessor tagProcessor;
-    private WebcamName webcam;
-    private VisionPortal portal;
-
     private TagDetector detector;
 
     @Override
@@ -103,7 +97,7 @@ public class PrimaryTeleOp extends LinearOpMode {
 
             if (this.gamepad1.x && this.detector.hasTag(RED_GOAL)) {
                 this.drivetrain.center(5.0, () -> {
-                    Optional<AprilTagDetection> goal = this.detector.getTag(RED_GOAL);
+                    Optional<AprilTagDetection> goal = this.detector.getPossibleTag(RED_GOAL);
                     return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
                 });
             }
@@ -127,16 +121,7 @@ public class PrimaryTeleOp extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "frontLeft")
         );
 
-        this.tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
-        this.webcam = hardwareMap.get(WebcamName.class, "webcam");
-        this.portal = new VisionPortal.Builder()
-                .setCamera(webcam)
-                .addProcessor(tagProcessor)
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .setCameraResolution(new Size(640, 360))
-                .build();
-
-        this.detector = new TagDetector(this.tagProcessor, this.portal);
+        this.detector = new TagDetector(hardwareMap.get(WebcamName.class, "webcam"));
 
     }
 
