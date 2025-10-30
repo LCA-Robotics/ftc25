@@ -22,12 +22,24 @@ import org.lexingtonchristian.ftc.util.TagDetector;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.stream.Collectors;
 
 @Autonomous
 public class PrimaryAuto extends LinearOpMode {
+
+    private static final int GPP = 21;
+    private static final int PGP = 22;
+    private static final int PPG = 23;
+
+    private static final Map<Integer, Integer> DISTANCES = Map.of(
+            GPP, 10,
+            PGP, 20,
+            PPG, 30
+    );
+
     // Launcher motors + servo
     private DcMotor launcherLeft;
     private DcMotor launcherRight;
@@ -104,6 +116,12 @@ public class PrimaryAuto extends LinearOpMode {
                 drive.zero();
                 sleep(250);
                 launch(0.37, 3);
+                drive.move(0, 0.55, 0);
+                if (redGoal.ftcPose.range < 64) continue;
+                drive.zero();
+                sleep(100);
+                drive.rotate(90);
+
             }
         }
     }
@@ -124,4 +142,5 @@ public class PrimaryAuto extends LinearOpMode {
             numBalls -= 1;
         }
     }
+
 }
