@@ -79,7 +79,7 @@ public class PrimaryAuto extends LinearOpMode {
 
         waitForStart();
 
-        drive.move(-0.55, 0, 0);
+        drive.move(0, 0.55, 0);
 
         while (this.opModeIsActive()) {
             boolean canSeeRedGoal = tagDetector.hasTag(24);
@@ -90,10 +90,6 @@ public class PrimaryAuto extends LinearOpMode {
                 if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 40) continue;
                 drive.zero();
-                drive.center(5.0, () -> {
-                    Optional<AprilTagDetection> goal = tagDetector.getTag(24);
-                    return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
-                });
                 launch(0.37, 3);
             }
         }
