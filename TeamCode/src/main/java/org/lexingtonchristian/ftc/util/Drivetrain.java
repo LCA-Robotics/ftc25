@@ -33,6 +33,16 @@ public class Drivetrain {
         zero();
     }
 
+    public void distance(double distance, Supplier<Double> range) {
+        double error = range.get() - distance;
+        while (Math.abs(error) > 1.0) {
+            double speed = MathHelper.clamp(error * 0.01, 0.0, 0.55);
+            move(speed, 0.0, 0.0);
+            error = range.get() - distance;
+        }
+        zero();
+    }
+
     public void rotate(double yaw) {
         move(0.0, 0.0, yaw);
     }
