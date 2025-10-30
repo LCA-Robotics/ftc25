@@ -45,7 +45,7 @@ public class PrimaryAuto extends LinearOpMode {
     private int numBalls = 3;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         // Assign launcher motors + servo to hardwaremap
         this.launcherLeft = hardwareMap.get(DcMotor.class, "launcherLeft");
         this.launcherRight = hardwareMap.get(DcMotor.class, "launcherRight");
@@ -84,21 +84,19 @@ public class PrimaryAuto extends LinearOpMode {
 
         waitForStart();
 
-        drive.move(-0.55, 0, 0);
-
         while (this.opModeIsActive()) {
-            boolean canSeeRedGoal = tagDetector.hasTag(24);
-            if (numBalls > 0 && canSeeRedGoal) {
-                for (AprilTagDetection detection : tagDetector.getAprilTags()) {
-                    telemetry.addLine(String.format(Locale.ENGLISH, "Range: %2f",
-                            detection.ftcPose.range));
-                }
-                AprilTagDetection redGoal = tagDetector
-                        .getTag(24)
-                        .orElse(null);
-                if (redGoal == null) continue;
-                if (redGoal.ftcPose.range < 40) continue;
-                drive.zero();
+
+            for (AprilTagDetection detection : tagDetector.getAprilTags()) {
+                telemetry.addLine(String.format(Locale.ENGLISH, "Range: %2f",
+                        detection.ftcPose.range));
+            }
+
+            if (numBalls > 0 && tagDetector.hasTag(24)) {
+                drive.distance(40.0, () ->
+                        tagDetector.hasTag(24) ?
+                        tagDetector.getTag(24).ftcPose.range :
+                        10.0
+                );
                 launch(0.37, 3);
             }
         }
