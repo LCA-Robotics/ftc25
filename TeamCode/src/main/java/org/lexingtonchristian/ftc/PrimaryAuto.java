@@ -22,6 +22,7 @@ import org.lexingtonchristian.ftc.util.TagDetector;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.stream.Collectors;
 
@@ -84,6 +85,11 @@ public class PrimaryAuto extends LinearOpMode {
 
         waitForStart();
 
+        for (int i = 0; i < 55; i++) {
+            sleep(10);
+            drive.move(0, i * 0.01, 0);
+        }
+
         while (this.opModeIsActive()) {
 
             for (AprilTagDetection detection : tagDetector.getAprilTags()) {
@@ -92,25 +98,25 @@ public class PrimaryAuto extends LinearOpMode {
             }
 
             if (numBalls > 0 && tagDetector.hasTag(24)) {
-                drive.distance(40.0, () ->
-                        tagDetector.hasTag(24) ?
-                        tagDetector.getTag(24).ftcPose.range :
-                        10.0
-                );
+                AprilTagDetection redGoal = tagDetector.getTag(24);
+                if (redGoal == null) continue;
+                if (redGoal.ftcPose.range < 40) continue;
+                drive.zero();
+                sleep(250);
                 launch(0.37, 3);
             }
         }
     }
 
     private void launch(double power, int shots) {
+        launcherLeft.setPower(power);
+        launcherRight.setPower(power);
+        sleep(1500);
         for (int i = shots; i > 0; i--) {
-            launcherLeft.setPower(power);
-            launcherRight.setPower(power);
-            sleep(1500);
             launcherServo.setPower(1.0);
             sleep(500);
             launcherServo.setPower(0.0);
-            sleep(1000);
+            sleep(1250);
             if (i == 1) {
                 launcherLeft.setPower(0.0);
                 launcherRight.setPower(0.0);
@@ -118,16 +124,4 @@ public class PrimaryAuto extends LinearOpMode {
             numBalls -= 1;
         }
     }
-
-    private void initialize() {
-        this.enhanced(launcherLeft).setVelocityPIDFCoefficients(4, 0.5, 0, 11.7);
-        this.enhanced(launcherRight).setVelocityPIDFCoefficients(4, 0.5, 0, 11.7);
-        this.launcherLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.launcherRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    private DcMotorEx enhanced(DcMotor motor) {
-        return (DcMotorEx) motor;
-    }
-
 }
