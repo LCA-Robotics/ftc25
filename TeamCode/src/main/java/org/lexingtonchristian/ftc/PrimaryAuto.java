@@ -47,8 +47,8 @@ public class PrimaryAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Assign launcher motors + servo to hardwaremap
-        this.launcherLeft = hardwareMap.get(DcMotor.class, "leftLauncher");
-        this.launcherRight = hardwareMap.get(DcMotor.class, "rightLauncher");
+        this.launcherLeft = hardwareMap.get(DcMotor.class, "launcherLeft");
+        this.launcherRight = hardwareMap.get(DcMotor.class, "launcherRight");
         this.launcherServo = hardwareMap.get(CRServo.class, "launcherServo");
 
         // Assign drive motors to hardwaremap
