@@ -14,6 +14,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.lexingtonchristian.ftc.lib.util.Encoder;
 import org.lexingtonchristian.ftc.util.Drivetrain;
+import org.lexingtonchristian.ftc.util.Launcher;
 import org.lexingtonchristian.ftc.util.MathHelper;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.lexingtonchristian.ftc.util.TagDetector;
@@ -58,9 +59,7 @@ public class PrimaryTeleOp extends LinearOpMode {
     private static final int PGP = 22;
     private static final int PPG = 23;
 
-    private DcMotor launcherLeft;
-    private DcMotor launcherRight;
-    private CRServo launcherServo;
+    private Launcher launcher;
 
     private Drivetrain drivetrain;
 
@@ -80,9 +79,6 @@ public class PrimaryTeleOp extends LinearOpMode {
 
         while (this.opModeIsActive()) {
 
-            // Set launcher power (max of 45%)
-            double launchPower = MathHelper.clamp(this.gamepad1.right_trigger, 0.0, 0.45);
-
             // If slowed, run at 20% speed; else, run at 70%
             double speedLimit = this.gamepad1.right_bumper ? 0.2 : 0.7;
 
@@ -97,13 +93,12 @@ public class PrimaryTeleOp extends LinearOpMode {
                     speedLimit
             );
 
-            this.launcherLeft.setPower(launchPower);
-            this.launcherRight.setPower(launchPower);
+            if (this.gamepad1.right_trigger > 0.0) {
+                this.launcher.spin(MathHelper.clamp(this.gamepad1.right_trigger, 0.0, 0.45));
+            }
 
             if (this.gamepad1.b) {
-                this.launcherServo.setPower(0.7);
-            } else {
-                this.launcherServo.setPower(0.0);
+                this.launcher.load();
             }
 
             if (this.gamepad1.x && this.detector.hasTag(RED_GOAL)) {
@@ -119,9 +114,11 @@ public class PrimaryTeleOp extends LinearOpMode {
 
     private void hardwareInit() {
 
-        this.launcherLeft = hardwareMap.get(DcMotor.class, "leftLauncher");
-        this.launcherRight = hardwareMap.get(DcMotor.class, "rightLauncher");
-        this.launcherServo = hardwareMap.get(CRServo.class, "launcherServo");
+        this.launcher = new Launcher(
+                hardwareMap.get(DcMotor.class, "leftLauncher"),
+                hardwareMap.get(DcMotor.class, "rightLauncher"),
+                hardwareMap.get(CRServo.class, "launcherServo")
+        );
 
         this.drivetrain = new Drivetrain(
                 hardwareMap.get(DcMotor.class, "backRight"),
@@ -129,9 +126,6 @@ public class PrimaryTeleOp extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "frontRight"),
                 hardwareMap.get(DcMotor.class, "frontLeft")
         );
-
-        this.launcherLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.launcherServo.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         this.webcam = hardwareMap.get(WebcamName.class, "webcam");
