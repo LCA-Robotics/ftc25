@@ -63,6 +63,8 @@ public class PrimaryTeleOp extends LinearOpMode {
     private Drivetrain drivetrain;
     private TagDetector detector;
 
+    private DcMotor intake;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -88,7 +90,15 @@ public class PrimaryTeleOp extends LinearOpMode {
             );
 
             if (this.gamepad1.right_trigger > 0.0) {
-                this.launcher.spin(MathHelper.clamp(this.gamepad1.right_trigger, 0.0, 0.45));
+                this.launcher.spin(0.37);
+            } else {
+                this.launcher.zero();
+            }
+
+            if (this.gamepad1.left_trigger > 0.0) {
+                this.intake.setPower(0.37);
+            } else {
+                this.intake.setPower(0.0);
             }
 
             if (this.gamepad1.b) {
@@ -122,6 +132,8 @@ public class PrimaryTeleOp extends LinearOpMode {
         );
 
         this.detector = new TagDetector(hardwareMap.get(WebcamName.class, "webcam"));
+
+        this.intake = hardwareMap.get(DcMotor.class, "intake");
 
     }
 
