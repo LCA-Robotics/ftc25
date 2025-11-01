@@ -38,8 +38,6 @@ public class Launcher {
 
     public void load() {
         this.servo.setPower(1.0);
-        this.sleep(500);
-        this.servo.setPower(0.0);
     }
 
     public void launch(double power) {

@@ -19,6 +19,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.lexingtonchristian.ftc.lib.drive.SampleMecanumDrive;
 import org.lexingtonchristian.ftc.util.Drivetrain;
 import org.lexingtonchristian.ftc.util.TagDetector;
+import org.lexingtonchristian.ftc.util.Tags;
 
 import java.util.List;
 import java.util.Locale;
@@ -109,27 +110,15 @@ public class PrimaryAuto extends LinearOpMode {
                         detection.ftcPose.range));
             }
 
-            if (numBalls > 0 && tagDetector.hasTag(24)) {
-                AprilTagDetection redGoal = tagDetector.getTag(24);
+            if (numBalls > 0 && tagDetector.hasTag(Tags.CURRENT)) {
+                AprilTagDetection redGoal = tagDetector.getTag(Tags.CURRENT);
                 if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 40) continue;
                 drive.zero();
                 sleep(250);
-                launch(0.37, 3);
-                drive.move(0, 0.55, 0);
-                if (redGoal.ftcPose.range < 64) continue;
-                drive.zero();
-                sleep(100);
-                drive.rotate(90);
+                launch(0.43, 3);
             }
 
-            Optional<AprilTagDetection> obelisk = tagDetector.getObelisk();
-
-            if (!obelisk.isPresent()) continue;
-            int obeliskID = obelisk.get().id;
-            drive.move(0, 0.55, 0);
-            sleep(DISTANCES.get(obeliskID));
-            drive.zero();
         }
     }
 

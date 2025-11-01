@@ -18,6 +18,7 @@ import org.lexingtonchristian.ftc.util.Launcher;
 import org.lexingtonchristian.ftc.util.MathHelper;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.lexingtonchristian.ftc.util.TagDetector;
+import org.lexingtonchristian.ftc.util.Tags;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,18 +53,9 @@ import java.util.stream.Collectors;
 @TeleOp
 public class PrimaryTeleOp extends LinearOpMode {
 
-    private static final int BLU_GOAL = 20;
-    private static final int RED_GOAL = 24;
-
-    private static final int GPP = 21;
-    private static final int PGP = 22;
-    private static final int PPG = 23;
-
     private Launcher launcher;
     private Drivetrain drivetrain;
     private TagDetector detector;
-
-    private DcMotor intake;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -76,7 +68,7 @@ public class PrimaryTeleOp extends LinearOpMode {
         while (this.opModeIsActive()) {
 
             // If slowed, run at 20% speed; else, run at 70%
-            double speedLimit = this.gamepad1.right_bumper ? 0.2 : 0.7;
+            double speedLimit = this.gamepad1.right_bumper ? 0.15 : 0.4;
 
             double leftX = this.gamepad1.left_stick_x;  // left stick X
             double leftY = this.gamepad1.left_stick_y;  // left stick Y
@@ -90,24 +82,20 @@ public class PrimaryTeleOp extends LinearOpMode {
             );
 
             if (this.gamepad1.right_trigger > 0.0) {
-                this.launcher.spin(0.37);
+                this.launcher.spin(0.43);
             } else {
                 this.launcher.zero();
             }
 
-            if (this.gamepad1.left_trigger > 0.0) {
-                this.intake.setPower(0.37);
-            } else {
-                this.intake.setPower(0.0);
-            }
-
             if (this.gamepad1.b) {
                 this.launcher.load();
+            } else {
+                this.launcher.zero();
             }
 
-            if (this.gamepad1.x && this.detector.hasTag(RED_GOAL)) {
+            if (this.gamepad1.x && this.detector.hasTag(Tags.CURRENT)) {
                 this.drivetrain.center(5.0, () -> {
-                    Optional<AprilTagDetection> goal = this.detector.getPossibleTag(RED_GOAL);
+                    Optional<AprilTagDetection> goal = this.detector.getPossibleTag(Tags.CURRENT);
                     return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
                 });
             }
@@ -132,8 +120,6 @@ public class PrimaryTeleOp extends LinearOpMode {
         );
 
         this.detector = new TagDetector(hardwareMap.get(WebcamName.class, "webcam"));
-
-        this.intake = hardwareMap.get(DcMotor.class, "intake");
 
     }
 
