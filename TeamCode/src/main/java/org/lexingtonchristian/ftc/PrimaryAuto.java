@@ -1,32 +1,28 @@
 package org.lexingtonchristian.ftc;
 
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
+import static org.lexingtonchristian.ftc.util.Drivetrain.XYDirection.X_DIRECTION;
+import static org.lexingtonchristian.ftc.util.Drivetrain.XYDirection.Y_DIRECTION;
 
 import android.util.Size;
 
-import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.lexingtonchristian.ftc.lib.drive.SampleMecanumDrive;
 import org.lexingtonchristian.ftc.util.Drivetrain;
 import org.lexingtonchristian.ftc.util.TagDetector;
 import org.lexingtonchristian.ftc.util.Tags;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.stream.Collectors;
 
 @Autonomous
 public class PrimaryAuto extends LinearOpMode {
@@ -98,10 +94,7 @@ public class PrimaryAuto extends LinearOpMode {
 
         waitForStart();
 
-        for (int i = 0; i < 55; i++) {
-            sleep(10);
-            drive.move(0, i * 0.01, 0);
-        }
+        drive.accelerate(0, 55, Y_DIRECTION);
 
         while (this.opModeIsActive()) {
 
@@ -113,10 +106,23 @@ public class PrimaryAuto extends LinearOpMode {
             if (numBalls > 0 && tagDetector.hasTag(Tags.CURRENT)) {
                 AprilTagDetection redGoal = tagDetector.getTag(Tags.CURRENT);
                 if (redGoal == null) continue;
-                if (redGoal.ftcPose.range < 40) continue;
-                drive.zero();
+                if (redGoal.ftcPose.range < 36) continue;
+                drive.decelerate(55, 0, Y_DIRECTION);
+                sleep(90); // decelerate already sleeps 10
+
+                drive.center(5.0, () -> {
+                    Optional<AprilTagDetection> goal = tagDetector.getPossibleTag(Tags.CURRENT);
+                    return goal.map(aprilTagDetection ->
+                            aprilTagDetection.ftcPose.bearing).orElse(0.0);
+                });
+
                 sleep(250);
-                launch(0.43, 3);
+                launch(0.60, 3);
+                sleep(500);
+
+                drive.rotate(0.3);
+                sleep(1000);
+                drive.zero();
             }
 
         }
