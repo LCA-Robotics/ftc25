@@ -24,11 +24,14 @@ public class Launcher {
         this.left.setDirection(DcMotorSimple.Direction.REVERSE);
         this.servo.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        this.left.setVelocityPIDFCoefficients(4, 0.5, 0, 11.7);
+        this.right.setVelocityPIDFCoefficients(4, 0.5, 0, 11.7);
+
     }
 
-    public void spin(double power) {
-        this.left.setPower(power);
-        this.right.setPower(power);
+    public void spin(double velocity) {
+        this.left.setVelocity(velocity);
+        this.right.setVelocity(velocity);
     }
 
     public void zero() {

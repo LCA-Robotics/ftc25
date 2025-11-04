@@ -1,5 +1,6 @@
 package org.lexingtonchristian.ftc;
 
+import android.animation.BidirectionalTypeConverter;
 import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,32 +24,6 @@ import org.lexingtonchristian.ftc.util.Tags;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-/**
- * <table border="1">
- *     <tr>
- *         <td><b>Port</b></td>
- *         <td><b>Motor</b></td>
- *     </tr>
- *     <tr>
- *         <td>0</td>
- *         <td>backRight</td>
- *     </tr>
- *     <tr>
- *         <td>1</td>
- *         <td>backLeft</td>
- *     </tr>
- *     <tr>
- *         <td>2</td>
- *         <td>frontRight</td>
- *     </tr>
- *     <tr>
- *         <td>3</td>
- *         <td>frontLeft</td>
- *     </tr>
- * </table>
- *
- */
 
 @TeleOp
 public class PrimaryTeleOp extends LinearOpMode {
