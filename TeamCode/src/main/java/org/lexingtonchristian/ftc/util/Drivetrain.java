@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.lexingtonchristian.ftc.lib.drive.opmode.ManualFeedforwardTuner;
+
 import java.text.DecimalFormat;
 import java.util.function.Supplier;
 
@@ -16,6 +18,8 @@ public class Drivetrain {
 
     private final DcMotorEx frontRight;
     private final DcMotorEx frontLeft;
+
+    
 
     public Drivetrain(DcMotor backRight, DcMotor backLeft, DcMotor frontRight, DcMotor frontLeft) {
 
@@ -82,6 +86,49 @@ public class Drivetrain {
         this.backLeft.setPower(0.0);
         this.frontRight.setPower(0.0);
         this.frontLeft.setPower(0.0);
+    }
+
+    public void accelerate(int startPercent, int endPercent, XYDirection direction) {
+        for (int i = startPercent; i < endPercent; i++) {
+            double drivePower = i * 0.1;
+            switch (direction) {
+                case X_DIRECTION:
+                    move(drivePower, 0, 0);
+                case Y_DIRECTION:
+                    move(0, drivePower, 0);
+            }
+            try {
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        zero();
+    }
+
+    public void decelerate(int startPercent, int endPercent, XYDirection direction) {
+        for (int i = startPercent; i > endPercent; i--) {
+            double drivePower = i * 0.1;
+            switch (direction) {
+                case X_DIRECTION:
+                    move(drivePower, 0, 0);
+                case Y_DIRECTION:
+                    move(0, drivePower, 0);
+            }
+            try {
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        zero();
+    }
+
+    public enum XYDirection {
+        X_DIRECTION,
+        Y_DIRECTION
     }
 
 }
