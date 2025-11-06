@@ -57,16 +57,12 @@ public class PrimaryTeleOp extends LinearOpMode {
             );
 
             if (this.gamepad1.right_trigger > 0.0) {
-                this.launcher.spin(0.6);
+                this.launcher.spin(1000);
             } else {
                 this.launcher.zero();
             }
 
-            if (this.gamepad1.b) {
-                this.launcher.load();
-            } else {
-                this.launcher.zero();
-            }
+            this.launcher.servo(this.gamepad1.b);
 
             if (this.gamepad1.x && this.detector.hasTag(Tags.CURRENT)) {
                 this.drivetrain.center(5.0, () -> {

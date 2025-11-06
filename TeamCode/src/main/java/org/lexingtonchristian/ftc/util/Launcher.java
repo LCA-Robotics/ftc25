@@ -63,11 +63,13 @@ public class Launcher {
 
     public void launch(double ticks, int shots) {
         this.spin(ticks);
-        sleep(500); // 500 + 750 = 1250ms wait for first iteration
+        sleep(750); // 750 + 750 = 1500ms wait for first iteration
             for (int i = shots; i > 0; i--) {
                 sleep(750);
                 this.servo.setPower(1.0);
                 sleep(500);
+                this.servo.setPower(-1.0);
+                sleep(250);
                 this.servo.setPower(0.0);
                 numBalls--;
                 if (i != 1) continue;
