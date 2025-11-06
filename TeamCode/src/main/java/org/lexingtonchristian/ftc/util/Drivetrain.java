@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.lexingtonchristian.ftc.lib.drive.opmode.ManualFeedforwardTuner;
-
 import java.text.DecimalFormat;
 import java.util.function.Supplier;
 
@@ -58,10 +56,10 @@ public class Drivetrain {
 
     public void move(double x, double y, double yaw, double limit) {
 
-        double pBackRight   = x + y - yaw;
-        double pBackLeft    = x + y + yaw;
-        double pFrontRight  = x - y - yaw;
-        double pFrontLeft   = x - y + yaw;
+        double pBackRight   = y - x + yaw;
+        double pBackLeft    = y + x - yaw;
+        double pFrontRight  = y + x + yaw;
+        double pFrontLeft   = y - x - yaw;
 
         // Normalize speeds
         double max = MathHelper.max(pBackRight, pBackLeft, pFrontRight, pFrontLeft);
@@ -87,13 +85,15 @@ public class Drivetrain {
     }
 
     public void accelerate(int startPercent, int endPercent, XYDirection direction) {
-        for (int i = startPercent; i < endPercent; i++) {
-            double drivePower = i * 0.1;
+        for (int i = startPercent; i <= endPercent; i++) {
+            double drivePower = i * 0.01;
             switch (direction) {
                 case X_DIRECTION:
                     move(drivePower, 0, 0);
+                    break;
                 case Y_DIRECTION:
                     move(0, drivePower, 0);
+                    break;
             }
             try {
                 Thread.sleep(10);
@@ -102,12 +102,11 @@ public class Drivetrain {
                 Thread.currentThread().interrupt();
             }
         }
-        zero();
     }
 
     public void decelerate(int startPercent, int endPercent, XYDirection direction) {
-        for (int i = startPercent; i > endPercent; i--) {
-            double drivePower = i * 0.1;
+        for (int i = startPercent; i >= endPercent; i--) {
+            double drivePower = i * 0.01;
             switch (direction) {
                 case X_DIRECTION:
                     move(drivePower, 0, 0);
@@ -121,7 +120,6 @@ public class Drivetrain {
                 Thread.currentThread().interrupt();
             }
         }
-        zero();
     }
 
     public enum XYDirection {
