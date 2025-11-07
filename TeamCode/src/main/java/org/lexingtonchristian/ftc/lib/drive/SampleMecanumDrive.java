@@ -1,5 +1,17 @@
 package org.lexingtonchristian.ftc.lib.drive;
 
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_ACCEL;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_ANG_ACCEL;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_ANG_VEL;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_VEL;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MOTOR_VELO_PID;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.RUN_USING_ENCODER;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.TRACK_WIDTH;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.encoderTicksToInches;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kA;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kStatic;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kV;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -37,18 +49,6 @@ import org.lexingtonchristian.ftc.lib.util.LynxModuleUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_ACCEL;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_ANG_ACCEL;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_ANG_VEL;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_VEL;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.TRACK_WIDTH;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.encoderTicksToInches;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kA;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kStatic;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kV;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.

@@ -1,29 +1,17 @@
 package org.lexingtonchristian.ftc;
 
-import android.animation.BidirectionalTypeConverter;
-import android.util.Size;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.lexingtonchristian.ftc.lib.util.Encoder;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.util.Drivetrain;
 import org.lexingtonchristian.ftc.util.Launcher;
-import org.lexingtonchristian.ftc.util.MathHelper;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.lexingtonchristian.ftc.util.TagDetector;
 import org.lexingtonchristian.ftc.util.Tags;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @TeleOp
 public class PrimaryTeleOp extends LinearOpMode {
@@ -43,7 +31,7 @@ public class PrimaryTeleOp extends LinearOpMode {
         while (this.opModeIsActive()) {
 
             // If slowed, run at 20% speed; else, run at 70%
-            double speedLimit = this.gamepad1.right_bumper ? 0.15 : 0.4;
+            double speedLimit = this.gamepad1.right_bumper ? 0.15 : 1.0;
 
             double leftX = this.gamepad1.left_stick_x;  // left stick X
             double leftY = this.gamepad1.left_stick_y;  // left stick Y
@@ -77,18 +65,8 @@ public class PrimaryTeleOp extends LinearOpMode {
 
     private void hardwareInit() {
 
-        this.launcher = new Launcher(
-                hardwareMap.get(DcMotor.class, "launcherLeft"),
-                hardwareMap.get(DcMotor.class, "launcherRight"),
-                hardwareMap.get(CRServo.class, "launcherServo")
-        );
-
-        this.drivetrain = new Drivetrain(
-                hardwareMap.get(DcMotor.class, "backRight"),
-                hardwareMap.get(DcMotor.class, "backLeft"),
-                hardwareMap.get(DcMotor.class, "frontRight"),
-                hardwareMap.get(DcMotor.class, "frontLeft")
-        );
+        this.launcher = Constants.initLauncher(hardwareMap);
+        this.drivetrain = Constants.initDrivetrain(hardwareMap);
 
         this.detector = new TagDetector(hardwareMap.get(WebcamName.class, "webcam"));
 

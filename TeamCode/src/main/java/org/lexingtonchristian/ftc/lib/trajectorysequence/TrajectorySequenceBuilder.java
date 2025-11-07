@@ -20,9 +20,8 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityCons
 import com.acmerobotics.roadrunner.util.Angle;
 
 import org.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.SequenceSegment;
-import org.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.TurnSegment;
-
 import org.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.TrajectorySegment;
+import org.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.TurnSegment;
 import org.lexingtonchristian.ftc.lib.trajectorysequence.sequencesegment.WaitSegment;
 
 import java.util.ArrayList;
