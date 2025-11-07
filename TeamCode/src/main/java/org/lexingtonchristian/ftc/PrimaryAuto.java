@@ -1,5 +1,6 @@
 package org.lexingtonchristian.ftc;
 
+import static org.lexingtonchristian.ftc.util.Constants.CURRENT;
 import static org.lexingtonchristian.ftc.util.Constants.GPP;
 import static org.lexingtonchristian.ftc.util.Constants.PGP;
 import static org.lexingtonchristian.ftc.util.Constants.PPG;
@@ -16,10 +17,10 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.util.Drivetrain;
 import org.lexingtonchristian.ftc.util.Launcher;
 import org.lexingtonchristian.ftc.util.TagDetector;
-import org.lexingtonchristian.ftc.util.Tags;
 
 import java.util.Locale;
 import java.util.Map;
@@ -39,43 +40,17 @@ public class PrimaryAuto extends LinearOpMode {
     private DcMotor launcherRight;
     private CRServo launcherServo;
 
-    // Drive motors
-    private DcMotor backLeft;
-    private DcMotor backRight;
-    private DcMotor frontLeft;
-    private DcMotor frontRight;
-
     // AprilTag Processor
     private AprilTagProcessor tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
     private WebcamName webcam;
     private VisionPortal portal;
 
+    private Drivetrain drive;
+
     @Override
     public void runOpMode() {
         // Assign launcher motors + servo to hardwaremap
-        this.launcherLeft = hardwareMap.get(DcMotor.class, "launcherLeft");
-        this.launcherRight = hardwareMap.get(DcMotor.class, "launcherRight");
-        this.launcherServo = hardwareMap.get(CRServo.class, "launcherServo");
-
-        // Assign drive motors to hardwaremap
-        this.backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        this.backRight = hardwareMap.get(DcMotor.class, "backRight");
-        this.frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        this.frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-
-        // Add webcam
-        this.webcam = hardwareMap.get(WebcamName.class, "webcam");
-
-        // Add VisionPortal
-        this.portal = new VisionPortal.Builder()
-                .setCamera(this.webcam)
-                .addProcessor(this.tagProcessor)
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .setCameraResolution(new Size(640, 360))
-                .build();
-
-        // Create Drivetrain
-        Drivetrain drive = new Drivetrain(backRight, backLeft, frontRight, frontLeft);
+        hardwareInit();
 
         // Create TagDetector
         TagDetector tagDetector = new TagDetector(this.tagProcessor, this.portal);
@@ -94,15 +69,15 @@ public class PrimaryAuto extends LinearOpMode {
                         detection.ftcPose.range));
             }
 
-            if (launcher.numBalls > 0 && tagDetector.hasTag(Tags.CURRENT)) {
-                AprilTagDetection redGoal = tagDetector.getTag(Tags.CURRENT);
+            if (launcher.numBalls > 0 && tagDetector.hasTag(CURRENT)) {
+                AprilTagDetection redGoal = tagDetector.getTag(CURRENT);
                 if (redGoal == null) continue;
                 if (redGoal.ftcPose.range < 36) continue;
                 drive.decelerate(55, 0, Y_DIRECTION);
                 sleep(90); // decelerate already sleeps 10
 
                 drive.center(1.5, () -> {
-                    Optional<AprilTagDetection> goal = tagDetector.getPossibleTag(Tags.CURRENT);
+                    Optional<AprilTagDetection> goal = tagDetector.getPossibleTag(CURRENT);
                     return goal.map(aprilTagDetection ->
                             aprilTagDetection.ftcPose.bearing).orElse(0.0);
                 });
@@ -114,9 +89,30 @@ public class PrimaryAuto extends LinearOpMode {
                 drive.move(0.4, 0.0, 0.0);
                 sleep(1000);
                 drive.zero();
-                sleep(20000);
+                continue;
             }
+            break;
         }
+    }
+
+    private void hardwareInit() {
+        this.launcherLeft = hardwareMap.get(DcMotor.class, "launcherLeft");
+        this.launcherRight = hardwareMap.get(DcMotor.class, "launcherRight");
+        this.launcherServo = hardwareMap.get(CRServo.class, "launcherServo");
+
+        // Assign drive motors to hardwaremap
+        this.drive = Constants.initDrivetrain(hardwareMap);
+
+        // Add webcam
+        this.webcam = hardwareMap.get(WebcamName.class, "webcam");
+
+        // Add VisionPortal
+        this.portal = new VisionPortal.Builder()
+                .setCamera(this.webcam)
+                .addProcessor(this.tagProcessor)
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+                .setCameraResolution(new Size(640, 360))
+                .build();
     }
 
 }
