@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.lexingtonchristian.ftc.motor.Motor;
+
 public class Launcher {
 
     private final DcMotorEx left;
@@ -62,7 +64,7 @@ public class Launcher {
         for (int i = shots; i > 0; i--) {
             sleep(750);
             this.servo.setPower(1.0);
-            sleep(500);
+            sleep(400);
             this.servo.setPower(-1.0);
             sleep(250);
             this.servo.setPower(0.0);

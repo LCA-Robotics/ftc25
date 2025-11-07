@@ -24,6 +24,11 @@ public class Constants {
     public static final String LAUNCHER_RIGHT  = "launcherRight";
     public static final String LAUNCHER_SERVO  = "launcherServo";
 
+    public static final double P               = 4.00;
+    public static final double I               = 0.50;
+    public static final double D               = 4.00;
+    public static final double F               = 11.7;
+
     public static Drivetrain initDrivetrain(HardwareMap map) {
         return new Drivetrain(
                 map.get(DcMotor.class, BACK_RIGHT),
