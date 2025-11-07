@@ -89,9 +89,9 @@ public class PrimaryAuto extends LinearOpMode {
                 drive.move(0.4, 0.0, 0.0);
                 sleep(1000);
                 drive.zero();
-                continue;
+
+                sleep(25000); // remain stopped for rest of autonomous
             }
-            break;
         }
     }
 

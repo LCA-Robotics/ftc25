@@ -31,7 +31,7 @@ public class PrimaryTeleOp extends LinearOpMode {
         while (this.opModeIsActive()) {
 
             // If slowed, run at 20% speed; else, run at 70%
-            double speedLimit = this.gamepad1.right_bumper ? 0.15 : 1.0;
+            double speedLimit = this.gamepad1.right_bumper ? 0.30 : 1.00;
 
             double leftX = this.gamepad1.left_stick_x;  // left stick X
             double leftY = this.gamepad1.left_stick_y;  // left stick Y
