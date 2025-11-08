@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.lexingtonchristian.ftc.motor.Motor;
 
@@ -12,9 +13,9 @@ public class Launcher {
     private final DcMotorEx left;
     private final DcMotorEx right;
 
-    private final CRServo servo;
+    private final Servo servo;
 
-    public Launcher(DcMotor left, DcMotor right, CRServo servo) {
+    public Launcher(DcMotor left, DcMotor right, Servo servo) {
 
         this.left = (DcMotorEx) left;
         this.right = (DcMotorEx) right;
@@ -39,15 +40,17 @@ public class Launcher {
         this.right.setPower(0.0);
     }
 
-    public void servo(boolean on) {
-        this.servo.setPower(on ? 1.0 : 0.0);
+    public void servo(boolean closed) {
+        this.servo.setPosition(closed ? Constants.LAUNCHER_CLOSED : Constants.LAUNCHER_OPEN);
     }
 
     public void launch(double power) {
         this.spin(power);
         this.sleep(1500);
         this.servo(true);
+        this.sleep(500);
         this.zero();
+        this.servo(false);
     }
 
     private void sleep(long milliseconds) {
@@ -61,15 +64,13 @@ public class Launcher {
     public void launch(double ticks, int shots) {
         this.spin(ticks);
         sleep(750); // 750 + 750 = 1500ms wait for first iteration
-        for (int i = shots; i > 0; i--) {
-            sleep(750);
-            this.servo.setPower(1.0);
-            sleep(400);
-            this.servo.setPower(-1.0);
-            sleep(250);
-            this.servo.setPower(0.0);
+        for (int i = 0; i < shots; i++) {
+            this.sleep(750);
+            this.servo(true);
+            this.sleep(500);
+            this.servo(false);
             numBalls--;
-            if (i != 1) continue;
+            if (i != shots - 1) continue;
             this.zero();
         }
     }

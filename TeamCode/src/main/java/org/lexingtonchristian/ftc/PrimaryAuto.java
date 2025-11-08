@@ -83,7 +83,7 @@ public class PrimaryAuto extends LinearOpMode {
                 });
 
                 sleep(250);
-                launcher.launch(1100, 1);
+                launcher.launch(1250, 1);
                 sleep(500);
 
                 drive.move(0.4, 0.0, 0.0);

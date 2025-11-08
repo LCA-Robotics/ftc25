@@ -31,11 +31,11 @@ public class PrimaryTeleOp extends LinearOpMode {
         while (this.opModeIsActive()) {
 
             // If slowed, run at 20% speed; else, run at 70%
-            double speedLimit = this.gamepad1.right_bumper ? 0.30 : 1.00;
+            double speedLimit = this.gamepad1.right_bumper ? 0.30 : 0.85;
 
-            double leftX = this.gamepad1.left_stick_x;  // left stick X
-            double leftY = this.gamepad1.left_stick_y;  // left stick Y
-            double rightX = this.gamepad1.right_stick_x; // right stick X
+            double leftX =  this.gamepad1.left_stick_x;  // left stick X
+            double leftY =  this.gamepad1.left_stick_y;  // left stick Y
+            double rightX = this.gamepad1.right_stick_x * 0.6; // right stick X (rotational, slow by 60%)
 
             this.drivetrain.move(
                     leftX,
@@ -45,7 +45,7 @@ public class PrimaryTeleOp extends LinearOpMode {
             );
 
             if (this.gamepad1.right_trigger > 0.0) {
-                this.launcher.spin(1000);
+                this.launcher.spin(1250);
             } else {
                 this.launcher.zero();
             }
