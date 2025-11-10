@@ -18,12 +18,14 @@ public class DriveForwardAuto extends LinearOpMode {
 
         waitForStart();
 
+        this.drivetrain.move(0.0, -0.4, 0.0);
+        this.sleep(500);
+        this.drivetrain.zero();
+
     }
 
     private void initHardware() {
-
         this.drivetrain = Constants.initDrivetrain(this.hardwareMap);
-
     }
 
 }

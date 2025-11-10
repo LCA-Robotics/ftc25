@@ -3,7 +3,6 @@ package org.lexingtonchristian.ftc.util;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 public class Constants {
 
@@ -14,11 +13,10 @@ public class Constants {
     public static final int    PGP             = 22;
     public static final int    PPG             = 23;
 
-    public static final int    CURRENT         = RED_GOAL;
+    public static final int    CURRENT         = BLUE_GOAL;
 
-    public static final double LAUNCHER_OPEN   = 0.0; //TODO: set value
-    public static final double LAUNCHER_CLOSED = 0.0; //TODO: set value
-
+    public static final double LAUNCHER_OPEN   = 0.7;
+    public static final double LAUNCHER_CLOSED = -2.0;
 
     public static final String BACK_RIGHT      = "backRight";
     public static final String BACK_LEFT       = "backLeft";
@@ -47,7 +45,7 @@ public class Constants {
         return new Launcher(
                 map.get(DcMotor.class, LAUNCHER_LEFT),
                 map.get(DcMotor.class, LAUNCHER_RIGHT),
-                map.get(Servo.class, LAUNCHER_SERVO)
+                map.get(CRServo.class, LAUNCHER_SERVO)
         );
     }
 

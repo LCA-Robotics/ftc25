@@ -1,9 +1,12 @@
 package org.lexingtonchristian.ftc.motor;
 
+import static org.lexingtonchristian.ftc.util.Constants.D;
+import static org.lexingtonchristian.ftc.util.Constants.F;
+import static org.lexingtonchristian.ftc.util.Constants.I;
+import static org.lexingtonchristian.ftc.util.Constants.P;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-
-import static org.lexingtonchristian.ftc.util.Constants.*;
 
 public class Motor {
 
