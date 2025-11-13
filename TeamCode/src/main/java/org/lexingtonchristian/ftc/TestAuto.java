@@ -20,7 +20,7 @@ public class TestAuto extends LinearOpMode {
 
         Launcher launcher = Constants.initLauncher(hardwareMap);
         TagDetector tagDetector = new TagDetector(hardwareMap.get(WebcamName.class, "webcam"));
-        RRMecanum drive = new RRMecanum(kV, kA, kStatic, TRACK_WIDTH, WHEELBASE, 1.0) {
+        RRMecanum drive = new RRMecanum(kV, kA, kStatic, TRACK_WIDTH, WHEELBASE, 1.0, hardwareMap) {
             @Override
             protected double getRawExternalHeading() {
                 return 0;
