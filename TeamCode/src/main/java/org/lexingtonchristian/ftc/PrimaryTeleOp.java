@@ -27,6 +27,7 @@ public class PrimaryTeleOp extends LinearOpMode {
 
         waitForStart();
 
+        // Reset launcher servo to initial position
         this.launcher.servo(-1.0);
         this.sleep(600);
         this.launcher.servo(0.0);
