@@ -1,6 +1,5 @@
 package org.lexingtonchristian.ftc.util;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.encoderTicksToInches;
 import static org.lexingtonchristian.ftc.util.Constants.*;
 
@@ -10,6 +9,7 @@ import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public abstract class RRMecanum extends MecanumDrive {
     private List<Integer> lastEncoderVelocities = new ArrayList<>();
     private List<DcMotorEx> motors;
 
-    public RRMecanum(double kV, double kA, double kStatic, double trackWidth, double wheelBase, double lateralMultiplier) {
+    public RRMecanum(double kV, double kA, double kStatic, double trackWidth, double wheelBase, double lateralMultiplier, HardwareMap hardwareMap) {
 
         super(kV, kA, kStatic, trackWidth, wheelBase, lateralMultiplier);
 
