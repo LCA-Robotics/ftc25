@@ -31,8 +31,6 @@ public class TestAuto extends LinearOpMode {
 
         drive.runForDistance(0.0, 0.55, 0.0, 24.0);
 
-        drive.zero();
-
     }
 
 

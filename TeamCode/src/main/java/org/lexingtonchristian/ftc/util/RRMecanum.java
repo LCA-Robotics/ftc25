@@ -49,6 +49,15 @@ public abstract class RRMecanum extends MecanumDrive {
 
     }
 
+    public void setMotorTicks(double backLeftTicks, double backRightTicks, double frontLeftTicks, double frontRightTicks) {
+
+        this.backLeft.setVelocity(backLeftTicks);
+        this.backRight.setVelocity(backRightTicks);
+        this.frontLeft.setVelocity(frontLeftTicks);
+        this.frontRight.setVelocity(frontRightTicks);
+
+    }
+
     public void zero() {
 
         this.setMotorPowers(0, 0, 0, 0);
