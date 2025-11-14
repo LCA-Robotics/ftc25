@@ -4,15 +4,37 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/**
+ * Lists constants for use across several classes in order to simplify code and reduce use of magic
+ * constants.
+ */
 public class Constants {
 
+    /**
+     * AprilTag id for the blue goal
+     */
     public static final int    BLUE_GOAL       = 20;
+    /**
+     * AprilTag id for the red goal
+     */
     public static final int    RED_GOAL        = 24;
 
+    /**
+     * Motif AprilTag (green purple purple)
+     */
     public static final int    GPP             = 21;
+    /**
+     * Motif AprilTag (purple green purple)
+     */
     public static final int    PGP             = 22;
+    /**
+     * Motif AprilTag (purple purple green)
+     */
     public static final int    PPG             = 23;
 
+    /**
+     * The current alliance goal AprilTag id
+     */
     public static final int    CURRENT         = BLUE_GOAL;
 
     public static final double LAUNCHER_OPEN   = 0.7;
@@ -32,6 +54,10 @@ public class Constants {
     public static final double D               = 4.00;
     public static final double F               = 11.7;
 
+    /**
+     * @param map the {@link HardwareMap} used to reference the motors
+     * @return a constructed {@link Drivetrain} with the four motors
+     */
     public static Drivetrain initDrivetrain(HardwareMap map) {
         return new Drivetrain(
                 map.get(DcMotor.class, BACK_RIGHT),
@@ -41,6 +67,10 @@ public class Constants {
         );
     }
 
+    /**
+     * @param map the {@link HardwareMap} used to reference the motors and servo
+     * @return a constructed {@link Launcher} with the motors and servo
+     */
     public static Launcher initLauncher(HardwareMap map) {
         return new Launcher(
                 map.get(DcMotor.class, LAUNCHER_LEFT),
