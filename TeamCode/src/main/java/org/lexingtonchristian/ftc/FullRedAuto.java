@@ -1,13 +1,12 @@
 package org.lexingtonchristian.ftc;
 
-import static org.lexingtonchristian.ftc.util.Drivetrain.XYDirection.Y_DIRECTION;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.lexingtonchristian.ftc.util.Constants;
+import org.lexingtonchristian.ftc.util.Direction;
 import org.lexingtonchristian.ftc.util.Drivetrain;
 import org.lexingtonchristian.ftc.util.Launcher;
 import org.lexingtonchristian.ftc.util.TagDetector;
@@ -35,7 +34,7 @@ public class FullRedAuto extends LinearOpMode {
 
         this.sleep(10000);
 
-        this.drive.accelerate(0, 55, Y_DIRECTION);
+        this.drive.accelerate(0, 55, Direction.Y);
 
         while (this.opModeIsActive()) {
             for (AprilTagDetection detection : this.detector.getAprilTags()) {
@@ -47,7 +46,7 @@ public class FullRedAuto extends LinearOpMode {
                 AprilTagDetection goal = this.detector.getTag(Constants.RED_GOAL);
                 if (goal == null) continue;
                 if (goal.ftcPose.range < 36) continue;
-                this.drive.decelerate(55, 0, Y_DIRECTION);
+                this.drive.decelerate(55, 0, Direction.Y);
                 sleep(90); // decelerate already sleeps 10
 
                 this.drive.center(3.0, () -> {

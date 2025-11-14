@@ -84,16 +84,18 @@ public class Drivetrain {
         this.frontLeft.setPower(0.0);
     }
 
-    public void accelerate(int startPercent, int endPercent, XYDirection direction) {
+    public void accelerate(int startPercent, int endPercent, Direction direction) {
         for (int i = startPercent; i <= endPercent; i++) {
             double drivePower = i * 0.01;
             switch (direction) {
-                case X_DIRECTION:
+                case X:
                     move(drivePower, 0, 0);
                     break;
-                case Y_DIRECTION:
+                case Y:
                     move(0, drivePower, 0);
                     break;
+                default:
+                    zero();
             }
             try {
                 Thread.sleep(10);
@@ -104,14 +106,16 @@ public class Drivetrain {
         }
     }
 
-    public void decelerate(int startPercent, int endPercent, XYDirection direction) {
+    public void decelerate(int startPercent, int endPercent, Direction direction) {
         for (int i = startPercent; i >= endPercent; i--) {
             double drivePower = i * 0.01;
             switch (direction) {
-                case X_DIRECTION:
+                case X:
                     move(drivePower, 0, 0);
-                case Y_DIRECTION:
+                case Y:
                     move(0, drivePower, 0);
+                default:
+                    zero();
             }
             try {
                 Thread.sleep(10);
@@ -120,11 +124,6 @@ public class Drivetrain {
                 Thread.currentThread().interrupt();
             }
         }
-    }
-
-    public enum XYDirection {
-        X_DIRECTION,
-        Y_DIRECTION
     }
 
 }
