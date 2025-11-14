@@ -4,12 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import java.text.DecimalFormat;
 import java.util.function.Supplier;
 
 public class Drivetrain {
-
-    private static final DecimalFormat TWO_DECIMALS = new DecimalFormat("#.00");
 
     private final DcMotorEx backRight;
     private final DcMotorEx backLeft;
@@ -31,7 +28,7 @@ public class Drivetrain {
 
     public void center(double tolerance, Supplier<Double> bearing) {
         while (tolerance < bearing.get() || bearing.get() < -tolerance) {
-            rotate(Double.parseDouble(TWO_DECIMALS.format(bearing.get() * -0.02)));
+            rotate(MathHelper.round(bearing.get() * -0.02, 2));
         }
         zero();
     }

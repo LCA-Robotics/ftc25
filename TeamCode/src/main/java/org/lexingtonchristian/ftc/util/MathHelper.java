@@ -1,5 +1,8 @@
 package org.lexingtonchristian.ftc.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class MathHelper {
 
     public static double clamp(double val, double min, double max) {
@@ -14,6 +17,13 @@ public class MathHelper {
             max = Math.max(current, max);
         }
         return max;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        return new BigDecimal(Double.toString(value))
+                .setScale(places, RoundingMode.HALF_UP)
+                .doubleValue();
     }
 
 }
