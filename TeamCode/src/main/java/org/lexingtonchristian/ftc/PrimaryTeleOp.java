@@ -41,9 +41,9 @@ public class PrimaryTeleOp extends LinearOpMode {
             double rightX = this.gamepad1.right_stick_x * 0.6; // right stick X (rotational, slow by 60%)
 
             this.drivetrain.move(
-                    leftX,
-                    leftY,
-                    rightX,
+                    -leftX,
+                    -leftY,
+                    -rightX,
                     speedLimit
             );
 

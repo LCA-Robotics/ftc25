@@ -56,10 +56,10 @@ public class Drivetrain {
 
     public void move(double x, double y, double yaw, double limit) {
 
-        double pBackRight   = y - x + yaw;
-        double pBackLeft    = y + x - yaw;
-        double pFrontRight  = y + x + yaw;
-        double pFrontLeft   = y - x - yaw;
+        double pBackRight   =  x - y - yaw;
+        double pBackLeft    =  x + y + yaw;
+        double pFrontRight  =  x + y - yaw;
+        double pFrontLeft   =  x - y + yaw;
 
         // Normalize speeds
         double max = MathHelper.max(pBackRight, pBackLeft, pFrontRight, pFrontLeft);
