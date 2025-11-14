@@ -55,12 +55,13 @@ public abstract class RRMecanum extends MecanumDrive {
 
     }
 
-    public void runForDistance(double powerX, double powerY, double heading, double endDistanceInches) {
+    public void runForDistance(double powerX, double powerY, double headingDegrees, double endDistanceInches) {
 
         List<Boolean> completedMotors = new ArrayList<>(Arrays.asList(false, false, false, false));
-        this.setDrivePower(new Pose2d(powerX, powerY, heading));
         List<Double> startPositions = this.getWheelPositions();
         boolean driveComplete = false;
+
+        this.setDrivePower(new Pose2d(powerX, powerY, Math.toRadians(headingDegrees)));
 
         while (!driveComplete) {
 
@@ -77,6 +78,8 @@ public abstract class RRMecanum extends MecanumDrive {
             driveComplete = completedMotors.stream().allMatch(b -> b);
 
         }
+
+        this.zero();
 
     }
 
