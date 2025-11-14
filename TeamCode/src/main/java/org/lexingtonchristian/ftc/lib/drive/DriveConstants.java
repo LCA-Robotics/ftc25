@@ -26,15 +26,15 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 537.6;
-    public static final double MAX_RPM = 312;
+    public static final double TICKS_PER_REV = 537.6; // TODO: Find and set motor ticks per rev
+    public static final double MAX_RPM = 312; // TODO: Find and set max motor rpm
 
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
      * Set this flag to false if drive encoders are not present and an alternative localization
      * method is in use (e.g., tracking wheels).
      *
-     * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
+     * If using the built-in motor velocity PID, TODO: update MOTOR_VELO_PID with the tuned coefficients
      * from DriveVelocityPIDTuner.
      */
     public static final boolean RUN_USING_ENCODER = true;
@@ -92,10 +92,10 @@ public class DriveConstants {
      * You are free to raise this on your own if you would like. It is best determined through experimentation.
 
      */
-    public static double MAX_VEL = 52.041349386287315;
-    public static double MAX_ACCEL = 52.041349386287315;
-    public static double MAX_ANG_VEL = Math.toRadians(186.359355);
-    public static double MAX_ANG_ACCEL = Math.toRadians(186.359355);
+    public static double MAX_VEL = 52.041349386287315; // TODO: Calculate max velocity
+    public static double MAX_ACCEL = 52.041349386287315; // TODO: Calculate max acceleration
+    public static double MAX_ANG_VEL = Math.toRadians(186.359355); // TODO: Calculate max angular velocity
+    public static double MAX_ANG_ACCEL = Math.toRadians(186.359355); // TODO: Calculate max angular acceleration
 
 
     public static double encoderTicksToInches(double ticks) {

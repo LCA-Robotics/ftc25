@@ -35,7 +35,7 @@ public abstract class RRMecanum extends MecanumDrive {
 
         motors = Arrays.asList(this.backLeft, this.backRight, this.frontLeft, this.frontRight);
 
-        reverseMotors();
+        this.reverseMotors();
 
     }
 
