@@ -11,12 +11,16 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public abstract class RRMecanum extends MecanumDrive {
+
+    private static final DecimalFormat TWO_DECIMALS = new DecimalFormat("#.00");
 
     private final DcMotorEx backLeft, backRight, frontLeft, frontRight;
 
@@ -56,6 +60,13 @@ public abstract class RRMecanum extends MecanumDrive {
         this.frontLeft.setVelocity(frontLeftTicks);
         this.frontRight.setVelocity(frontRightTicks);
 
+    }
+
+    public void center(double tolerance, Supplier<Double> bearing) {
+        while (tolerance < bearing.get() || bearing.get() < -tolerance) {
+            centerRotate(Double.parseDouble(TWO_DECIMALS.format(bearing.get() * -0.02)));
+        }
+        zero();
     }
 
     public void zero() {
@@ -123,6 +134,13 @@ public abstract class RRMecanum extends MecanumDrive {
 
         return wheelVelocities;
 
+    }
+
+    private void centerRotate(double velocityTicks) {
+        this.backLeft.setVelocity(velocityTicks);
+        this.backRight.setVelocity(velocityTicks * -1);
+        this.frontLeft.setVelocity(velocityTicks);
+        this.frontRight.setVelocity(velocityTicks * -1);
     }
 
     private void reverseMotors() {
