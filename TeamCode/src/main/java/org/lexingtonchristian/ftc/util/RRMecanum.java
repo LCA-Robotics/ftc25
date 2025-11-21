@@ -18,11 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public abstract class RRMecanum extends MecanumDrive {
-
-    private static final DecimalFormat TWO_DECIMALS = new DecimalFormat("#.00");
 
     private final DcMotorEx backLeft, backRight, frontLeft, frontRight;
 
@@ -40,7 +40,7 @@ public abstract class RRMecanum extends MecanumDrive {
         this.frontRight = hardwareMap.get(DcMotorEx.class, FRONT_RIGHT);
 
         this.setRunMode();
-        this.reverseMotors();
+//        this.reverseMotors();
 
         motors = Arrays.asList(this.backLeft, this.backRight, this.frontLeft, this.frontRight);
 
@@ -67,7 +67,7 @@ public abstract class RRMecanum extends MecanumDrive {
 
     public void center(double tolerance, Supplier<Double> bearing) {
         while (tolerance < bearing.get() || bearing.get() < -tolerance) {
-            centerRotate(Double.parseDouble(TWO_DECIMALS.format(bearing.get() * -0.02)));
+            centerRotate(MathHelper.round(bearing.get() * -0.02, 2));
         }
         zero();
     }
@@ -98,7 +98,7 @@ public abstract class RRMecanum extends MecanumDrive {
 
             }
 
-            driveComplete = completedMotors.stream().allMatch(b -> b);
+            driveComplete = completedMotors.stream().allMatch(Predicate.isEqual(true));
 
         }
 
