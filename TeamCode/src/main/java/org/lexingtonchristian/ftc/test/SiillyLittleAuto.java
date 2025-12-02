@@ -1,4 +1,4 @@
-package org.lexingtonchristian.ftc;
+package org.lexingtonchristian.ftc.test;
 
 import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.TRACK_WIDTH;
 import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.WHEELBASE;
@@ -16,8 +16,8 @@ import org.lexingtonchristian.ftc.util.Launcher;
 import org.lexingtonchristian.ftc.util.RRMecanum;
 import org.lexingtonchristian.ftc.util.TagDetector;
 
-@Autonomous(name = "10 Seconds", group = "Test")
-public class Second10Auto extends LinearOpMode {
+@Autonomous(name = "Forward 24", group = "Test")
+public class SiillyLittleAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -33,9 +33,7 @@ public class Second10Auto extends LinearOpMode {
 
         waitForStart();
 
-        drive.setDrivePower(move(0.0, 0.55, 0.0));
-        this.sleep(10000);
-        drive.zero();
+        drive.setDrivePower(move(0.0, 0.55, 90.0));
 
     }
 

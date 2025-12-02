@@ -1,10 +1,6 @@
-package org.lexingtonchristian.ftc;
+package org.lexingtonchristian.ftc.test;
 
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.TRACK_WIDTH;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.WHEELBASE;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kA;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kStatic;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kV;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.*;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -16,8 +12,8 @@ import org.lexingtonchristian.ftc.util.Launcher;
 import org.lexingtonchristian.ftc.util.RRMecanum;
 import org.lexingtonchristian.ftc.util.TagDetector;
 
-@Autonomous(name = "Strafe 24", group = "Test")
-public class Strafe24Auto extends LinearOpMode {
+@Autonomous(name = "Forward 24", group = "Test")
+public class Forward24Auto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -33,7 +29,7 @@ public class Strafe24Auto extends LinearOpMode {
 
         waitForStart();
 
-        drive.runForDistance(0.55, 0.0, 0.0, 24.0);
+        drive.runForDistance(0.0, 0.55, 0.0, 24.0);
 
     }
 
