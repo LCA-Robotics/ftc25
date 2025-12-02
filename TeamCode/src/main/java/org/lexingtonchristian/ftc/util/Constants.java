@@ -10,6 +10,24 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Constants {
 
+    public static final double kV = 0.0;
+    public static final double kA = 0.0;
+    public static final double kStatic = 0.0;
+
+    public static final double WHEEL_RADIUS = 2.047245;
+    public static final double TRACK_WIDTH = 11.375;
+    public static final double WHEELBASE = 4.730;
+
+    public static final double GEAR_RATIO = 1;
+
+    public static final double TICKS_PER_REV = 537.6;
+    public static final double MAX_RPM = 312;
+
+    public static double MAX_VELOCITY = 52.041349386287315;
+    public static double MAX_ACCELERATION = 52.041349386287315;
+    public static double MAX_ANGULAR_VELOCITY = Math.toRadians(186.359355);
+    public static double MAX_ANGULAR_ACCELERATION = Math.toRadians(186.359355);
+
     /**
      * AprilTag id for the blue goal
      */

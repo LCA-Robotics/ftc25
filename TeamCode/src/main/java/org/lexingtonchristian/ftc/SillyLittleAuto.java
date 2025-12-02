@@ -17,7 +17,7 @@ import org.lexingtonchristian.ftc.util.RRMecanum;
 import org.lexingtonchristian.ftc.util.TagDetector;
 
 @Autonomous(name = "Forward 24", group = "Test")
-public class SiillyLittleAuto extends LinearOpMode {
+public class SillyLittleAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
