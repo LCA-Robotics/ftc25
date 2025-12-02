@@ -1,10 +1,6 @@
 package org.lexingtonchristian.ftc.test;
 
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.TRACK_WIDTH;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.WHEELBASE;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kA;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kStatic;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.kV;
+import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.*;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -17,7 +13,7 @@ import org.lexingtonchristian.ftc.util.RRMecanum;
 import org.lexingtonchristian.ftc.util.TagDetector;
 
 @Autonomous(name = "Forward 24", group = "Test")
-public class SillyLittleAuto extends LinearOpMode {
+public class HeadingTestAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -33,7 +29,9 @@ public class SillyLittleAuto extends LinearOpMode {
 
         waitForStart();
 
-        drive.setDrivePower(move(0.0, 0.55, 90.0));
+        drive.setDrivePower(move(0.64, 0.37, 3.14));
+        sleep(3000);
+        drive.zero();
 
     }
 

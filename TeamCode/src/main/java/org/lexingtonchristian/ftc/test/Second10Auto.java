@@ -1,4 +1,4 @@
-package org.lexingtonchristian.ftc;
+package org.lexingtonchristian.ftc.test;
 
 import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.TRACK_WIDTH;
 import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.WHEELBASE;
