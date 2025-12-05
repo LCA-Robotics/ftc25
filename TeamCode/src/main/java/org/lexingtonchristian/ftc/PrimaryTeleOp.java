@@ -12,7 +12,7 @@ import org.lexingtonchristian.ftc.util.TagDetector;
 
 import java.util.Optional;
 
-@TeleOp
+@TeleOp(name = "Primary", group = "Competition")
 public class PrimaryTeleOp extends LinearOpMode {
 
     private Launcher launcher;

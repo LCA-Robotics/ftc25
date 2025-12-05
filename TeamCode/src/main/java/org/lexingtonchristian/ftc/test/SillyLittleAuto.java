@@ -16,7 +16,7 @@ import org.lexingtonchristian.ftc.util.Launcher;
 import org.lexingtonchristian.ftc.util.RRMecanum;
 import org.lexingtonchristian.ftc.util.TagDetector;
 
-@Autonomous(name = "Forward 24", group = "Test")
+@Autonomous(name = "Heading", group = "Test")
 public class SillyLittleAuto extends LinearOpMode {
 
     @Override

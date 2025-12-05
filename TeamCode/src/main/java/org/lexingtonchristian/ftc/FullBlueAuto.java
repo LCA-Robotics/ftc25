@@ -14,7 +14,7 @@ import org.lexingtonchristian.ftc.util.TagDetector;
 import java.util.Locale;
 import java.util.Optional;
 
-@Autonomous
+@Autonomous(name = "Blue Alliance Auto", group = "Competition")
 public class FullBlueAuto extends LinearOpMode {
 
     private Drivetrain drive;
