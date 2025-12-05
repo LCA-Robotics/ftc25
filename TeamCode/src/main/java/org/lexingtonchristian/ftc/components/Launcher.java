@@ -5,6 +5,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+/** <p>
+ *  Provides utilities for easily controlling a two-flywheel launcher, including:
+ *      <ul>
+ *          <li>{@link Launcher#spin(double)}</li>
+ *          <li>{@link Launcher#zero()}</li>
+ *          <li>{@link Launcher#servo(double)}</li>
+ *          <li>{@link Launcher#launch(double, int)}</li>
+ *      </ul>
+ *  </p>
+ */
 public class Launcher {
 
     private final DcMotorEx left;
@@ -27,16 +37,31 @@ public class Launcher {
 
     public int numBalls = 3;
 
+    /**
+     * <p>
+     *     Allows the flywheels to spin continuously.
+     * </p>
+     * <p>
+     *     If {@code velocity} is positive, the flywheels should be rotating outwardly.
+     * </p>
+     */
     public void spin(double velocity) {
         this.left.setVelocity(velocity);
         this.right.setVelocity(velocity);
     }
 
+    /**
+     * <p> Turns off the flywheel motors </p>
+     */
     public void zero() {
         this.left.setPower(0.0);
         this.right.setPower(0.0);
     }
 
+    /**
+     * <p> Rotates the launcher servo continuously at {@code power} power. </p>
+     * <p> If {@code power} is positive, the servo should rotate in a counterclockwise direction. </p>
+     */
     public void servo(double power) {
         this.servo.setPower(power);
     }
@@ -49,6 +74,9 @@ public class Launcher {
         }
     }
 
+    /**
+     * <p> Spins flywheels at {@code ticks} velocity to shoot {@code shots} balls. </p>
+     */
     public void launch(double ticks, int shots) {
         this.spin(ticks);
         this.sleep(1050); // 750 + 750 = 1500ms wait for first iteration
