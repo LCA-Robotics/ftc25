@@ -12,7 +12,7 @@ import org.lexingtonchristian.ftc.util.Launcher;
 import org.lexingtonchristian.ftc.util.RRMecanum;
 import org.lexingtonchristian.ftc.util.TagDetector;
 
-@Autonomous(name = "Heading Test", group = "Test")
+@Autonomous(name = "Forward 24", group = "Test")
 public class HeadingTestAuto extends LinearOpMode {
 
     @Override

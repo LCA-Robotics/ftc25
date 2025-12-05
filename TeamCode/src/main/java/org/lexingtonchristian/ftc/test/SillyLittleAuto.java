@@ -11,10 +11,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.lexingtonchristian.ftc.components.Launcher;
+import org.lexingtonchristian.ftc.components.TagDetector;
+import org.lexingtonchristian.ftc.components.drive.RRMecanum;
 import org.lexingtonchristian.ftc.util.Constants;
-import org.lexingtonchristian.ftc.util.Launcher;
-import org.lexingtonchristian.ftc.util.RRMecanum;
-import org.lexingtonchristian.ftc.util.TagDetector;
 
 @Autonomous(name = "Heading", group = "Test")
 public class SillyLittleAuto extends LinearOpMode {
@@ -37,10 +37,8 @@ public class SillyLittleAuto extends LinearOpMode {
 
     }
 
-
     public static Pose2d move(double x, double y, double heading) {
         return new Pose2d(x, y, heading);
     }
-
 
 }

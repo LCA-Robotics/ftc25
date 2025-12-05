@@ -1,4 +1,4 @@
-package org.lexingtonchristian.ftc.util;
+package org.lexingtonchristian.ftc.components;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;

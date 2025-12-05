@@ -1,6 +1,7 @@
-package org.lexingtonchristian.ftc.util;
+package org.lexingtonchristian.ftc.components.drive;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.encoderTicksToInches;
 import static org.lexingtonchristian.ftc.util.Constants.*;
 
@@ -8,17 +9,14 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import java.text.DecimalFormat;
+import org.lexingtonchristian.ftc.util.MathHelper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -40,7 +38,7 @@ public abstract class RRMecanum extends MecanumDrive {
         this.frontRight = hardwareMap.get(DcMotorEx.class, FRONT_RIGHT);
 
         this.setRunMode();
-//        this.reverseMotors();
+        this.reverseMotors();
 
         motors = Arrays.asList(this.backLeft, this.backRight, this.frontLeft, this.frontRight);
 
@@ -148,8 +146,8 @@ public abstract class RRMecanum extends MecanumDrive {
 
     private void reverseMotors() {
 
-        this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.backRight.setDirection(REVERSE);
+        this.frontRight.setDirection(REVERSE);
 
     }
 

@@ -1,4 +1,4 @@
-package org.lexingtonchristian.ftc.util;
+package org.lexingtonchristian.ftc.components;
 
 import android.util.Size;
 

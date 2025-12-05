@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.lexingtonchristian.ftc.components.drive.Drivetrain;
+import org.lexingtonchristian.ftc.components.Launcher;
+
 /**
  * Lists constants for use across several classes in order to simplify code and reduce use of magic
  * constants.

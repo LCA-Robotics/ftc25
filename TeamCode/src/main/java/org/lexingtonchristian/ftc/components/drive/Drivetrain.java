@@ -1,8 +1,11 @@
-package org.lexingtonchristian.ftc.util;
+package org.lexingtonchristian.ftc.components.drive;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.lexingtonchristian.ftc.util.Direction;
+import org.lexingtonchristian.ftc.util.MathHelper;
 
 import java.util.function.Supplier;
 

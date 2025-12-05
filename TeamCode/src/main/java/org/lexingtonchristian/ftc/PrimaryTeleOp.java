@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.lexingtonchristian.ftc.util.Constants;
-import org.lexingtonchristian.ftc.util.Drivetrain;
-import org.lexingtonchristian.ftc.util.Launcher;
-import org.lexingtonchristian.ftc.util.TagDetector;
+import org.lexingtonchristian.ftc.components.drive.Drivetrain;
+import org.lexingtonchristian.ftc.components.Launcher;
+import org.lexingtonchristian.ftc.components.TagDetector;
 
 import java.util.Optional;
 
