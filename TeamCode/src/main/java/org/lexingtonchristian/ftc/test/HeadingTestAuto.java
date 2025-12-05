@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.lexingtonchristian.ftc.components.Launcher;
+import org.lexingtonchristian.ftc.components.TagDetector;
+import org.lexingtonchristian.ftc.components.drive.RRMecanum;
 import org.lexingtonchristian.ftc.util.Constants;
-import org.lexingtonchristian.ftc.util.Launcher;
-import org.lexingtonchristian.ftc.util.RRMecanum;
-import org.lexingtonchristian.ftc.util.TagDetector;
 
 @Autonomous(name = "Forward 24", group = "Test")
 public class HeadingTestAuto extends LinearOpMode {

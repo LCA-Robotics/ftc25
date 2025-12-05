@@ -100,4 +100,8 @@ public class Constants {
         );
     }
 
+    public static double ticksToInches(double ticks) {
+        return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
+    }
+
 }
