@@ -19,13 +19,16 @@ public class RoadrunnerTest extends LinearOpMode {
         this.drivetrain = new Mecanum(this.hardwareMap);
 
         Trajectory traj = this.drivetrain.trajectoryBuilder(new Pose2d())
-                .forward(10.0) // in.
+                .forward(60.0) // in.
                 .build();
 
         waitForStart();
 
+        if (this.isStopRequested()) return;
+
         this.drivetrain.followTrajectory(traj);
 
+        while (!this.isStopRequested() && this.opModeIsActive());
 
     }
 

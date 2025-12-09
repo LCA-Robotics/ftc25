@@ -3,6 +3,7 @@ package org.lexingtonchristian.ftc.util;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
 import org.lexingtonchristian.ftc.components.Launcher;
@@ -30,6 +31,10 @@ public class Constants {
     public static double MAX_ACCELERATION = 52.041349386287315;
     public static double MAX_ANGULAR_VELOCITY = Math.toRadians(186.359355);
     public static double MAX_ANGULAR_ACCELERATION = Math.toRadians(186.359355);
+
+    public static PIDFCoefficients MOTOR_VELOCITY_PID = new PIDFCoefficients(
+            0.0, 0.0, 0.0, 32767 / ((MAX_RPM / 60) * TICKS_PER_REV)
+    );
 
     /**
      * AprilTag id for the blue goal

@@ -24,6 +24,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
@@ -31,8 +32,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_ANG_ACCEL;
-import static org.lexingtonchristian.ftc.lib.drive.DriveConstants.MAX_ANG_VEL;
 import static org.lexingtonchristian.ftc.util.Constants.*;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -59,14 +58,14 @@ public class Mecanum extends MecanumDrive {
     private static final TrajectoryAccelerationConstraint ACCELERATION_CONSTRAINT =
             getAccelerationConstraint(MAX_ACCELERATION);
 
-    private TrajectorySequenceRunner runner;
-    private TrajectoryFollower follower;
+    private final TrajectorySequenceRunner runner;
+    private final TrajectoryFollower follower;
 
-    private DcMotorEx backRight, backLeft, frontRight, frontLeft;
-    private List<DcMotorEx> motors;
+    private final DcMotorEx backRight, backLeft, frontRight, frontLeft;
+    private final List<DcMotorEx> motors;
 
-    private IMU imu;
-    private VoltageSensor voltageSensor;
+    private final IMU imu;
+    private final VoltageSensor voltageSensor;
 
     private List<Integer> lastEncoderPositions;
     private List<Integer> lastEncoderVelocities;
@@ -93,15 +92,18 @@ public class Mecanum extends MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-
         this.voltageSensor = map.voltageSensor.iterator().next();
 
-        for(DcMotorEx motor : motors) {
+        for (DcMotorEx motor : motors) {
             MotorConfigurationType configType = motor.getMotorType().clone();
             configType.setAchieveableMaxRPMFraction(1.0);
             motor.setMotorType(configType);
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            motor.setPIDFCoefficients(
+                    DcMotor.RunMode.RUN_USING_ENCODER,
+                    getCoefficients(MOTOR_VELOCITY_PID)
+            );
         }
 
         this.lastEncoderPositions = new ArrayList<>();
@@ -140,7 +142,7 @@ public class Mecanum extends MecanumDrive {
         return new TrajectorySequenceBuilder(
                 startPose,
                 VELOCITY_CONSTRAINT, ACCELERATION_CONSTRAINT,
-                MAX_ANG_VEL, MAX_ANG_ACCEL
+                MAX_ANGULAR_VELOCITY, MAX_ANGULAR_ACCELERATION
         );
     }
 
@@ -242,6 +244,15 @@ public class Mecanum extends MecanumDrive {
 
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAcceleration) {
         return new ProfileAccelerationConstraint(maxAcceleration);
+    }
+
+    public PIDFCoefficients getCoefficients(PIDFCoefficients coefficients) {
+        return new PIDFCoefficients(
+                coefficients.p,
+                coefficients.i,
+                coefficients.d,
+                coefficients.f * 12 / this.voltageSensor.getVoltage()
+        );
     }
 
 }
