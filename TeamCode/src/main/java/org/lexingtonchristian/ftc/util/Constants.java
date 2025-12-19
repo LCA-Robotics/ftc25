@@ -18,7 +18,7 @@ public class Constants {
     public static final double kA = 0.0;
     public static final double kStatic = 0.0;
 
-    public static final double WHEEL_RADIUS = 2.047245;
+    public static final double WHEEL_RADIUS = 2.0;
     public static final double TRACK_WIDTH = 11.375;
     public static final double WHEELBASE = 4.730;
 
@@ -107,6 +107,10 @@ public class Constants {
 
     public static double ticksToInches(double ticks) {
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
+    }
+
+    public static int inchesToTicks(double inches) {
+        return (int) ((inches / (WHEEL_RADIUS * 2 * Math.PI)) * TICKS_PER_REV);
     }
 
 }

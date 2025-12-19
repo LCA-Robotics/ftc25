@@ -2,6 +2,8 @@ package org.lexingtonchristian.ftc;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -14,6 +16,8 @@ import java.util.Optional;
 
 @TeleOp(name = "Primary", group = "Competition")
 public class PrimaryTeleOp extends LinearOpMode {
+
+    private DcMotor intake;
 
     private Launcher launcher;
     private Drivetrain drivetrain;
@@ -41,8 +45,8 @@ public class PrimaryTeleOp extends LinearOpMode {
             double rightX = this.gamepad1.right_stick_x * 0.6; // right stick X (rotational, slow by 60%)
 
             this.drivetrain.move(
+                    leftY,
                     -leftX,
-                    -leftY,
                     -rightX,
                     speedLimit
             );
@@ -51,6 +55,12 @@ public class PrimaryTeleOp extends LinearOpMode {
                 this.launcher.spin(1050);
             } else {
                 this.launcher.zero();
+            }
+
+            if (this.gamepad1.left_trigger > 0.0) {
+                this.intake.setPower(0.8);
+            } else {
+                this.intake.setPower(0.0);
             }
 
             if (this.gamepad1.b) {
@@ -73,6 +83,9 @@ public class PrimaryTeleOp extends LinearOpMode {
     }
 
     private void initHardware() {
+
+        this.intake = this.hardwareMap.get(DcMotor.class, "intake");
+        this.intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.launcher = Constants.initLauncher(hardwareMap);
         this.drivetrain = Constants.initDrivetrain(hardwareMap);

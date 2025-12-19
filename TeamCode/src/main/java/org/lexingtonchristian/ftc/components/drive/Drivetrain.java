@@ -3,10 +3,14 @@ package org.lexingtonchristian.ftc.components.drive;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.util.Direction;
 import org.lexingtonchristian.ftc.util.MathHelper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -28,12 +32,20 @@ public class Drivetrain {
     private final DcMotorEx frontRight;
     private final DcMotorEx frontLeft;
 
+    private final List<DcMotorEx> motors;
+
     public Drivetrain(DcMotor backRight, DcMotor backLeft, DcMotor frontRight, DcMotor frontLeft) {
 
         this.backRight  = (DcMotorEx) backRight;
         this.backLeft   = (DcMotorEx) backLeft;
         this.frontRight = (DcMotorEx) frontRight;
         this.frontLeft  = (DcMotorEx) frontLeft;
+
+        this.motors = new ArrayList<>();
+        this.motors.add(this.backRight);
+        this.motors.add(this.backLeft);
+        this.motors.add(this.frontRight);
+        this.motors.add(this.frontLeft);
 
         this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -42,19 +54,27 @@ public class Drivetrain {
 
     public void center(double tolerance, Supplier<Double> bearing) {
         while (tolerance < bearing.get() || bearing.get() < -tolerance) {
-            rotate(MathHelper.round(bearing.get() * -0.02, 2));
+            this.rotate(MathHelper.round(bearing.get() * -0.02, 2));
         }
-        zero();
+        this.zero();
+    }
+
+    public void align(double tolerance, Supplier<Double> x) {
+        while (tolerance < x.get() || x.get() < -tolerance) {
+            double speed = MathHelper.clamp(x.get() * 0.01, 0.0, 0.55);
+            this.move(0.0, speed, 0.0);
+        }
+        this.zero();
     }
 
     public void distance(double distance, Supplier<Double> range) {
         double error = range.get() - distance;
         while (Math.abs(error) > 1.0) {
             double speed = MathHelper.clamp(error * 0.01, 0.0, 0.55);
-            move(speed, 0.0, 0.0);
+            this.move(speed, 0.0, 0.0);
             error = range.get() - distance;
         }
-        zero();
+        this.zero();
     }
 
     /**
@@ -72,11 +92,11 @@ public class Drivetrain {
      * @see Drivetrain#move(double, double, double, double)
      */
     public void rotate(double yaw) {
-        move(0.0, 0.0, yaw);
+        this.move(0.0, 0.0, yaw);
     }
 
     public void move(double x, double y, double yaw) {
-        move(x, y, yaw, 1.0);
+        this.move(x, y, yaw, 1.0);
     }
 
     /**
@@ -126,6 +146,19 @@ public class Drivetrain {
         this.backLeft.setPower(pBackLeft * limit);
         this.frontRight.setPower(pFrontRight * limit);
         this.frontLeft.setPower(pFrontLeft * limit);
+
+    }
+
+    public void drive(double distance) {
+
+        this.motors.forEach(motor -> motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+
+        this.motors.forEach(motor -> {
+            motor.setTargetPosition(Constants.inchesToTicks(distance));
+            motor.setPower(0.5);
+        });
+
+        this.motors.forEach(motor -> motor.setMode(DcMotor.RunMode.RUN_TO_POSITION));
 
     }
 
@@ -179,6 +212,13 @@ public class Drivetrain {
                 Thread.currentThread().interrupt();
             }
         }
+    }
+
+    public void setPIDFCoefficients(double p, double i, double d, double f) {
+        this.motors.forEach(motor -> motor.setPIDFCoefficients(
+                DcMotor.RunMode.RUN_USING_ENCODER,
+                new PIDFCoefficients(p, i, d, f)
+        ));
     }
 
 }
