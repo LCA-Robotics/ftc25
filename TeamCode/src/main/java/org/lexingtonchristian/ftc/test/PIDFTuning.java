@@ -25,7 +25,7 @@ public class PIDFTuning extends LinearOpMode {
             "Derivative",
             "Feedforward"
     };
-    public static final double[] COEFFICIENTS = new double[]{20.0, 0.0, 5.0, 15.0};
+    public static final double[] COEFFICIENTS = new double[]{ 0.0, 0.5, 0.0, 20.0 };
 
     @Override
     public void runOpMode() throws InterruptedException {
