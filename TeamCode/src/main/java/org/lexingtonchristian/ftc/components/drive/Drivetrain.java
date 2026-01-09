@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  *     Provides several utilities for working with a Mecanum drivetrain, such as:
  *     <ul>
  *         <li>{@link Drivetrain#move(double, double, double, double)}</li>
- *         <li>{@link Drivetrain#rotate(double)}</li>
+ *         <li>{@link Drivetrain#turn(double)}</li>
  *         <li>{@link Drivetrain#center(double, Supplier)}</li>
  *         <li>{@link Drivetrain#distance(double, Supplier)}</li>
  *     </ul>
@@ -54,7 +54,7 @@ public class Drivetrain {
 
     public void center(double tolerance, Supplier<Double> bearing) {
         while (tolerance < bearing.get() || bearing.get() < -tolerance) {
-            this.rotate(MathHelper.round(bearing.get() * -0.02, 2));
+            this.turn(MathHelper.round(bearing.get() * -0.02, 2));
         }
         this.zero();
     }
@@ -91,8 +91,29 @@ public class Drivetrain {
      * @see Drivetrain#center(double, Supplier)
      * @see Drivetrain#move(double, double, double, double)
      */
-    public void rotate(double yaw) {
+    public void turn(double yaw) {
         this.move(0.0, 0.0, yaw);
+    }
+
+    /**
+     * <p>
+     *     Allows rotation of the robot at {@code velocity} ticks per revolution.
+     * </p>
+     * <p>
+     *     A positive {@code velocity} value indicates counterclockwise rotation, and vice versa.
+     * </p>
+     *
+     * @param yaw turn power
+     * @see Drivetrain#center(double, Supplier)
+     * @see Drivetrain#move(double, double, double, double)
+     */
+    public void rotate(double velocity) {
+
+        this.backLeft.setVelocity(velocity);
+        this.backRight.setVelocity(velocity * -1);
+        this.frontLeft.setVelocity(velocity * -1);
+        this.frontRight.setVelocity(velocity * -1);
+
     }
 
     public void move(double x, double y, double yaw) {
@@ -120,7 +141,7 @@ public class Drivetrain {
      * @param y strafe power
      * @param yaw turn power
      * @param limit speed multiplier
-     * @see Drivetrain#rotate(double)
+     * @see Drivetrain#turn(double)
      * @see Drivetrain#move(double, double, double)
      * @see Drivetrain#accelerate(int, int, Direction)
      * @see Drivetrain#decelerate(int, int, Direction)

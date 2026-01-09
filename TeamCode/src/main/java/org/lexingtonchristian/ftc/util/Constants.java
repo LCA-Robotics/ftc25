@@ -78,7 +78,7 @@ public class Constants {
     public static final String LAUNCHER_RIGHT  = "launcherRight";
     public static final String LAUNCHER_SERVO  = "launcherServo";
 
-    public static final String INTAKE_SERVO    = "intakeServo";
+    public static final String INTAKE_MOTOR = "intake";
 
     public static final double P               = 4.00;
     public static final double I               = 0.50;
@@ -111,7 +111,7 @@ public class Constants {
     }
 
     public static Intake initIntake(HardwareMap map) {
-        return new Intake(map.get(DcMotor.class, INTAKE_SERVO));
+        return new Intake(map.get(DcMotor.class, INTAKE_MOTOR));
     }
 
     public static double ticksToInches(double ticks) {
