@@ -3,12 +3,9 @@ package org.lexingtonchristian.ftc.test;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.lexingtonchristian.ftc.components.Intake;
 import org.lexingtonchristian.ftc.util.Constants;
-import org.lexingtonchristian.ftc.components.drive.Drivetrain;
 import org.lexingtonchristian.ftc.components.Launcher;
-import org.lexingtonchristian.ftc.components.TagDetector;
 
 @Autonomous(name = "Test Launch", group = "Test")
 public class TestLaunch extends LinearOpMode {
