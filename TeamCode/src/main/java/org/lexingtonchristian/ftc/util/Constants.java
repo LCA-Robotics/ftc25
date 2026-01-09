@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.lexingtonchristian.ftc.components.Intake;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
 import org.lexingtonchristian.ftc.components.Launcher;
 
@@ -66,6 +67,8 @@ public class Constants {
     public static final double LAUNCHER_OPEN   = 0.7;
     public static final double LAUNCHER_CLOSED = -2.0;
 
+    public static final long   CYCLE_TIME      = 500; // milliseconds TODO: Find the time it takes to cycle 1 ball
+
     public static final String BACK_RIGHT      = "backRight";
     public static final String BACK_LEFT       = "backLeft";
     public static final String FRONT_RIGHT     = "frontRight";
@@ -74,6 +77,8 @@ public class Constants {
     public static final String LAUNCHER_LEFT   = "launcherLeft";
     public static final String LAUNCHER_RIGHT  = "launcherRight";
     public static final String LAUNCHER_SERVO  = "launcherServo";
+
+    public static final String INTAKE_SERVO    = "intakeServo";
 
     public static final double P               = 4.00;
     public static final double I               = 0.50;
@@ -103,6 +108,10 @@ public class Constants {
                 map.get(DcMotor.class, LAUNCHER_RIGHT),
                 map.get(CRServo.class, LAUNCHER_SERVO)
         );
+    }
+
+    public static Intake initIntake(HardwareMap map) {
+        return new Intake(map.get(DcMotor.class, INTAKE_SERVO));
     }
 
     public static double ticksToInches(double ticks) {

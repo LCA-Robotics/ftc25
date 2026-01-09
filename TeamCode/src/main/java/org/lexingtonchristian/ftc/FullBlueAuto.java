@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.lexingtonchristian.ftc.components.Intake;
 import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.util.Direction;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
@@ -20,6 +21,7 @@ public class FullBlueAuto extends LinearOpMode {
     private Drivetrain drive;
     private Launcher launcher;
     private TagDetector detector;
+    private Intake intake;
 
     @Override
     public void runOpMode() {
@@ -42,7 +44,7 @@ public class FullBlueAuto extends LinearOpMode {
                         detection.ftcPose.range));
             }
 
-            if (launcher.numBalls > 0 && detector.hasTag(Constants.BLUE_GOAL)) {
+            if (Intake.numBalls > 0 && detector.hasTag(Constants.BLUE_GOAL)) {
                 AprilTagDetection goal = detector.getTag(Constants.BLUE_GOAL);
                 if (goal == null) continue;
                 if (goal.ftcPose.range < 38) continue;
@@ -72,6 +74,7 @@ public class FullBlueAuto extends LinearOpMode {
         this.launcher = Constants.initLauncher(hardwareMap);
         this.drive = Constants.initDrivetrain(hardwareMap);
         this.detector = new TagDetector(hardwareMap.get(WebcamName.class, "webcam"));
+        this.intake = Constants.initIntake(hardwareMap);
     }
 
 }

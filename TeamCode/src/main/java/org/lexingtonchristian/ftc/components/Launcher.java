@@ -35,8 +35,6 @@ public class Launcher {
 
     }
 
-    public int numBalls = 3;
-
     /**
      * <p>
      *     Allows the flywheels to spin continuously.
@@ -87,7 +85,7 @@ public class Launcher {
             this.servo(-1.0);
             this.sleep(250);
             this.servo(0.0);
-            numBalls--;
+            Intake.numBalls--;
             if (i != shots - 1) continue;
             this.zero();
         }
