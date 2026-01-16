@@ -26,4 +26,8 @@ public class MathHelper {
                 .doubleValue();
     }
 
+    public static boolean roughEqual(double a, double b, double tolerance) {
+        return (a - tolerance) < b && b < (a + tolerance);
+    }
+
 }

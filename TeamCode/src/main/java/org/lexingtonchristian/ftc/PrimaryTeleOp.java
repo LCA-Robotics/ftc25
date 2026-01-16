@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.lexingtonchristian.ftc.components.Intake;
 import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
 import org.lexingtonchristian.ftc.components.Launcher;
@@ -17,8 +18,7 @@ import java.util.Optional;
 @TeleOp(name = "Primary", group = "Competition")
 public class PrimaryTeleOp extends LinearOpMode {
 
-    private DcMotor intake;
-
+    private Intake intake;
     private Launcher launcher;
     private Drivetrain drivetrain;
     private TagDetector detector;
@@ -30,10 +30,6 @@ public class PrimaryTeleOp extends LinearOpMode {
         initHardware();
 
         waitForStart();
-
-        this.launcher.servo(-1.0);
-        this.sleep(600);
-        this.launcher.servo(0.0);
 
         while (this.opModeIsActive()) {
 
@@ -58,16 +54,16 @@ public class PrimaryTeleOp extends LinearOpMode {
             }
 
             if (this.gamepad1.left_trigger > 0.0) {
-                this.intake.setPower(0.8);
+                this.intake.run(0.7);
+                this.launcher.servo(1.0);
             } else {
-                this.intake.setPower(0.0);
+                this.intake.zero();
+                this.launcher.servo(0.0);
             }
 
             if (this.gamepad1.b) {
                 this.launcher.servo(1.0);
                 this.sleep(1200);
-                this.launcher.servo(-1.0);
-                this.sleep(600);
                 this.launcher.servo(0.0);
             }
 
@@ -84,8 +80,7 @@ public class PrimaryTeleOp extends LinearOpMode {
 
     private void initHardware() {
 
-        this.intake = this.hardwareMap.get(DcMotor.class, "intake");
-        this.intake.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.intake = new Intake(this.hardwareMap.get(DcMotor.class, "intake"));
 
         this.launcher = Constants.initLauncher(hardwareMap);
         this.drivetrain = Constants.initDrivetrain(hardwareMap);

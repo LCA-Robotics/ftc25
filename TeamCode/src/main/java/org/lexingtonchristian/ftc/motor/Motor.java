@@ -1,9 +1,9 @@
 package org.lexingtonchristian.ftc.motor;
 
-import static org.lexingtonchristian.ftc.util.Constants.D;
-import static org.lexingtonchristian.ftc.util.Constants.F;
-import static org.lexingtonchristian.ftc.util.Constants.I;
-import static org.lexingtonchristian.ftc.util.Constants.P;
+import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_D;
+import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_F;
+import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_I;
+import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_P;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -16,7 +16,12 @@ public class Motor {
     public Motor(DcMotor motor, boolean usePIDF) {
         this.raw = (DcMotorEx) motor;
         this.usePIDF = usePIDF;
-        if (usePIDF) this.raw.setVelocityPIDFCoefficients(P, I, D, F);
+        if (usePIDF) this.raw.setVelocityPIDFCoefficients(
+                DRIVETRAIN_P,
+                DRIVETRAIN_I,
+                DRIVETRAIN_D,
+                DRIVETRAIN_F
+        );
     }
 
     public void setPower(double power) {

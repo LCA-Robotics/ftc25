@@ -4,6 +4,7 @@ import static org.lexingtonchristian.ftc.util.Constants.CYCLE_TIME;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class Intake {
 
@@ -13,6 +14,7 @@ public class Intake {
 
     public Intake(DcMotor intakeMotor) {
         this.motor = (DcMotorEx) intakeMotor;
+        this.motor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void cycle(int cycles) {

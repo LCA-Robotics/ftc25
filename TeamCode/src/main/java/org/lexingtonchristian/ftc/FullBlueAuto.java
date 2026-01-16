@@ -36,8 +36,6 @@ public class FullBlueAuto extends LinearOpMode {
 
         this.sleep(10000);
 
-        this.drive.accelerate(0, 55, Direction.Y);
-
         while (this.opModeIsActive()) {
             for (AprilTagDetection detection : this.detector.getAprilTags()) {
                 telemetry.addLine(String.format(Locale.ENGLISH, "Range: %2f",
@@ -48,7 +46,6 @@ public class FullBlueAuto extends LinearOpMode {
                 AprilTagDetection goal = detector.getTag(Constants.BLUE_GOAL);
                 if (goal == null) continue;
                 if (goal.ftcPose.range < 38) continue;
-                this.drive.decelerate(55, 0, Direction.Y);
                 sleep(90); // decelerate already sleeps 10
 
                 this.drive.center(3.0, () -> {
