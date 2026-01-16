@@ -21,7 +21,7 @@ public class TestLaunch extends LinearOpMode {
         waitForStart();
 
         while (this.opModeIsActive()) {
-            intake.run(0.5);
+            intake.run(0.7);
             launcher.servo(1.0);
             launcher.spin(1000);
         }

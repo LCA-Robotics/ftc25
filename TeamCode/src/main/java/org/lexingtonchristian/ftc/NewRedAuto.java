@@ -1,6 +1,7 @@
 package org.lexingtonchristian.ftc;
 
 import static org.lexingtonchristian.ftc.util.Constants.CYCLE_TIME;
+import static org.lexingtonchristian.ftc.util.Constants.RED_GOAL;
 import static org.lexingtonchristian.ftc.util.Constants.initDrivetrain;
 import static org.lexingtonchristian.ftc.util.Constants.initIntake;
 import static org.lexingtonchristian.ftc.util.Constants.initLauncher;
@@ -14,7 +15,6 @@ import org.lexingtonchristian.ftc.components.Intake;
 import org.lexingtonchristian.ftc.components.Launcher;
 import org.lexingtonchristian.ftc.components.TagDetector;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
-import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
@@ -37,7 +37,7 @@ public class NewRedAuto extends LinearOpMode {
         drivetrain.drive(-40.0); // Reverse for 40 inches
 
         drivetrain.center(2.0, () -> { // Center on the goal, 2 degrees tolerance
-            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
+            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(RED_GOAL);
             return tag.map(aprilTagDetection ->
                     aprilTagDetection.ftcPose.bearing).orElse(0.0);
         });
@@ -53,13 +53,15 @@ public class NewRedAuto extends LinearOpMode {
         drivetrain.rotate(1000); // TODO: Rotation for degrees
         sleep(1000);
 
+        drivetrain.drive(24.0);
 
     }
 
-    private void zeroAll() { // Stops all movement in drivetrain, launcher, and intake
+    private void zeroAll() { // Stops all motors in drivetrain, launcher, and intake
         drivetrain.zero();
         launcher.zero();
         intake.zero();
+        launcher.servo(0.0);
     }
 
     private void initHardware() {
