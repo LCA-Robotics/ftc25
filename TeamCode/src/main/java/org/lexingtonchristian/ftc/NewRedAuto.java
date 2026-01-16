@@ -32,8 +32,6 @@ public class NewRedAuto extends LinearOpMode {
 
         waitForStart();
 
-        launcher.spin(1050);
-
         drivetrain.drive(-40.0); // Reverse for 40 inches
 
         drivetrain.center(2.0, () -> { // Center on the goal, 2 degrees tolerance

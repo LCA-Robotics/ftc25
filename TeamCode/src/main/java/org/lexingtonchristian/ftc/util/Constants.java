@@ -64,9 +64,6 @@ public class Constants {
      */
     public static final int    CURRENT         = BLUE_GOAL;
 
-    public static final double LAUNCHER_OPEN   = 0.7;
-    public static final double LAUNCHER_CLOSED = -2.0;
-
     public static final long   CYCLE_TIME      = 500; // milliseconds TODO: Find the time it takes to cycle 1 ball
 
     public static final String BACK_RIGHT      = "backRight";
@@ -78,12 +75,12 @@ public class Constants {
     public static final String LAUNCHER_RIGHT  = "launcherRight";
     public static final String LAUNCHER_SERVO  = "launcherServo";
 
-    public static final String INTAKE_MOTOR = "intake";
+    public static final String INTAKE_MOTOR    = "intake";
 
-    public static final double P               = 4.00;
-    public static final double I               = 0.50;
-    public static final double D               = 4.00;
-    public static final double F               = 11.7;
+    public static final double DRIVETRAIN_P    = 4.00;
+    public static final double DRIVETRAIN_I    = 0.50;
+    public static final double DRIVETRAIN_D    = 4.00;
+    public static final double DRIVETRAIN_F    = 11.7;
 
     /**
      * @param map the {@link HardwareMap} used to reference the motors

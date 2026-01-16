@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.util.Direction;
 import org.lexingtonchristian.ftc.util.MathHelper;
+import org.lexingtonchristian.ftc.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +104,7 @@ public class Drivetrain {
      *     A positive {@code velocity} value indicates counterclockwise rotation, and vice versa.
      * </p>
      *
-     * @param yaw turn power
+     * @param velocity turn power
      * @see Drivetrain#center(double, Supplier)
      * @see Drivetrain#move(double, double, double, double)
      */
@@ -143,8 +144,6 @@ public class Drivetrain {
      * @param limit speed multiplier
      * @see Drivetrain#turn(double)
      * @see Drivetrain#move(double, double, double)
-     * @see Drivetrain#accelerate(int, int, Direction)
-     * @see Drivetrain#decelerate(int, int, Direction)
      * @see Drivetrain#distance(double, Supplier)
      */
     public void move(double x, double y, double yaw, double limit) {
@@ -172,14 +171,24 @@ public class Drivetrain {
 
     public void drive(double distance) {
 
-        this.motors.forEach(motor -> motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+        resetEncoders();
 
         this.motors.forEach(motor -> {
-            motor.setTargetPosition(Constants.inchesToTicks(distance));
+            motor.setTargetPosition(Constants.inchesToTicks(distance * -1));
             motor.setPower(0.5);
         });
 
         this.motors.forEach(motor -> motor.setMode(DcMotor.RunMode.RUN_TO_POSITION));
+
+        this.motors.forEach(motor ->
+                Util.waitUntil(10, () -> MathHelper.roughEqual(
+                        motor.getCurrentPosition(),
+                        motor.getTargetPosition(),
+                        motor.getTargetPositionTolerance()
+                ))
+        );
+
+        resetEncoders();
 
     }
 
@@ -193,46 +202,8 @@ public class Drivetrain {
         this.frontLeft.setPower(0.0);
     }
 
-    public void accelerate(int startPercent, int endPercent, Direction direction) {
-        for (int i = startPercent; i <= endPercent; i++) {
-            double drivePower = i * 0.01;
-            switch (direction) {
-                case X:
-                    move(drivePower, 0, 0);
-                    break;
-                case Y:
-                    move(0, drivePower, 0);
-                    break;
-                default:
-                    zero();
-            }
-            try {
-                Thread.sleep(10);
-            }
-            catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
-
-    public void decelerate(int startPercent, int endPercent, Direction direction) {
-        for (int i = startPercent; i >= endPercent; i--) {
-            double drivePower = i * 0.01;
-            switch (direction) {
-                case X:
-                    move(drivePower, 0, 0);
-                case Y:
-                    move(0, drivePower, 0);
-                default:
-                    zero();
-            }
-            try {
-                Thread.sleep(10);
-            }
-            catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
+    public void resetEncoders() {
+        this.motors.forEach(motor -> motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER));
     }
 
     public void setPIDFCoefficients(double p, double i, double d, double f) {
