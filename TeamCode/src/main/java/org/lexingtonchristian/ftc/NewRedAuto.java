@@ -43,7 +43,7 @@ public class NewRedAuto extends LinearOpMode {
         intake.run(0.7); // Feed balls to the launcher
         launcher.spin(1200);
 
-        sleep(CYCLE_TIME * 3 + 500); // Wait to cycle 3 balls, +500ms error.
+        sleep(CYCLE_TIME * 3 + 1000); // Wait to cycle 3 balls, +1 second error.
         this.zeroAll();
 
         drivetrain.rotate(45.0);
@@ -61,6 +61,9 @@ public class NewRedAuto extends LinearOpMode {
         intake.run(0.7);
         launcher.servo(0.9);
         launcher.spin(1200);
+
+        sleep(CYCLE_TIME * 3 + 1000);
+        this.zeroAll();
 
     }
 
