@@ -20,7 +20,8 @@ public class Constants {
     public static final double kStatic = 0.0;
 
     public static final double WHEEL_RADIUS = 2.0;
-    public static final double TRACK_WIDTH = 11.375;
+    public static final double TRACK_WIDTH = 13.25;
+    public static final double CIRCUMFERENCE = TRACK_WIDTH * Math.PI;
     public static final double WHEELBASE = 4.730;
 
     public static final double GEAR_RATIO = 1;
