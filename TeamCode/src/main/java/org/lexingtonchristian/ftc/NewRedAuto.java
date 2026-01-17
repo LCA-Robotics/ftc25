@@ -32,26 +32,35 @@ public class NewRedAuto extends LinearOpMode {
 
         waitForStart();
 
-        drivetrain.drive(-40.0); // Reverse for 40 inches
+        drivetrain.drive(-60.0); // Reverse for 60 inches
 
         drivetrain.center(2.0, () -> { // Center on the goal, 2 degrees tolerance
             Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(RED_GOAL);
             return tag.map(aprilTagDetection ->
                     aprilTagDetection.ftcPose.bearing).orElse(0.0);
         });
-
-        launcher.servo(1.0); // Rotate the launcher servo continuously
-
-        intake.run(1.0); // Feed balls to the launcher
+        launcher.servo(0.9); // Rotate the launcher servo continuously
+        intake.run(0.7); // Feed balls to the launcher
+        launcher.spin(1200);
 
         sleep(CYCLE_TIME * 3 + 500); // Wait to cycle 3 balls, +500ms error.
-
         this.zeroAll();
 
-        drivetrain.rotate(1000); // TODO: Rotation for degrees
-        sleep(1000);
+        drivetrain.rotate(45.0);
 
-        drivetrain.drive(24.0);
+        intake.run(0.7);
+        launcher.servo(0.25);
+        drivetrain.drive(42.0);
+
+        intake.zero();
+        launcher.servo(0.0);
+
+        drivetrain.drive(-42.0);
+        drivetrain.rotate(-45.0);
+
+        intake.run(0.7);
+        launcher.servo(0.9);
+        launcher.spin(1200);
 
     }
 
