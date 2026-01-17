@@ -104,16 +104,25 @@ public class Drivetrain {
      *     A positive {@code velocity} value indicates counterclockwise rotation, and vice versa.
      * </p>
      *
-     * @param velocity turn power
+     * @param degrees degrees to turn
      * @see Drivetrain#center(double, Supplier)
      * @see Drivetrain#move(double, double, double, double)
      */
-    public void rotate(double velocity) {
+    public void rotate(double degrees) {
 
-        this.backLeft.setVelocity(velocity);
-        this.backRight.setVelocity(velocity * -1);
-        this.frontLeft.setVelocity(velocity * -1);
-        this.frontRight.setVelocity(velocity * -1);
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        int position = Constants.inchesToTicks((degrees / 360.0) * Constants.CIRCUMFERENCE);
+        this.backLeft.setTargetPosition(position);
+        this.frontLeft.setTargetPosition(position);
+        this.backRight.setTargetPosition(-position);
+        this.frontRight.setTargetPosition(-position);
+
+        setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        waitToPosition(10);
+
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
@@ -171,24 +180,18 @@ public class Drivetrain {
 
     public void drive(double distance) {
 
-        resetEncoders();
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         this.motors.forEach(motor -> {
             motor.setTargetPosition(Constants.inchesToTicks(distance * -1));
             motor.setPower(0.5);
         });
 
-        this.motors.forEach(motor -> motor.setMode(DcMotor.RunMode.RUN_TO_POSITION));
+        setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        this.motors.forEach(motor ->
-                Util.waitUntil(10, () -> MathHelper.roughEqual(
-                        motor.getCurrentPosition(),
-                        motor.getTargetPosition(),
-                        motor.getTargetPositionTolerance()
-                ))
-        );
+        waitToPosition(10);
 
-        resetEncoders();
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
@@ -202,8 +205,18 @@ public class Drivetrain {
         this.frontLeft.setPower(0.0);
     }
 
-    public void resetEncoders() {
-        this.motors.forEach(motor -> motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+    public void waitToPosition(int interval) {
+        this.motors.forEach(motor ->
+                Util.waitUntil(interval, () -> MathHelper.roughEqual(
+                        motor.getCurrentPosition(),
+                        motor.getTargetPosition(),
+                        motor.getTargetPositionTolerance()
+                ))
+        );
+    }
+
+    public void setMode(DcMotor.RunMode mode) {
+        this.motors.forEach(motor -> motor.setMode(mode));
     }
 
     public void setPIDFCoefficients(double p, double i, double d, double f) {
