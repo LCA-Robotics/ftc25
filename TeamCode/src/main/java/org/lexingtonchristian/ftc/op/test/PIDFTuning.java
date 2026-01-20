@@ -1,18 +1,10 @@
 package org.lexingtonchristian.ftc.op.test;
 
-import com.acmerobotics.roadrunner.drive.Drive;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.lexingtonchristian.ftc.components.TagDetector;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
 import org.lexingtonchristian.ftc.util.Constants;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @TeleOp(name = "PIDF Tuner", group = "Utility")
 public class PIDFTuning extends LinearOpMode {

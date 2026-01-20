@@ -9,7 +9,6 @@ import org.lexingtonchristian.ftc.components.motor.Motor;
 import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.util.MathHelper;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

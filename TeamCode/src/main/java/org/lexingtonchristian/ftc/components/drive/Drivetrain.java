@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.lexingtonchristian.ftc.util.Constants;
-import org.lexingtonchristian.ftc.util.Direction;
 import org.lexingtonchristian.ftc.util.MathHelper;
 import org.lexingtonchristian.ftc.util.Util;
 

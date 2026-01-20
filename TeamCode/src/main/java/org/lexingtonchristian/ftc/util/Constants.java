@@ -3,13 +3,12 @@ package org.lexingtonchristian.ftc.util;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.lexingtonchristian.ftc.components.Intake;
+import org.lexingtonchristian.ftc.components.Launcher;
 import org.lexingtonchristian.ftc.components.TagDetector;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
-import org.lexingtonchristian.ftc.components.Launcher;
 
 /**
  * Lists constants for use across several classes in order to simplify code and reduce use of magic

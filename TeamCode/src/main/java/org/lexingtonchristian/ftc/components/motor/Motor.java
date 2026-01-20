@@ -1,11 +1,11 @@
 package org.lexingtonchristian.ftc.components.motor;
 
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
 import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_D;
 import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_F;
 import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_I;
 import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_P;
-
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.*;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;

@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.lexingtonchristian.ftc.components.Intake;
-import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.components.Launcher;
+import org.lexingtonchristian.ftc.util.Constants;
 
 @Autonomous(name = "Test Launch", group = "Test")
 public class TestLaunch extends LinearOpMode {
