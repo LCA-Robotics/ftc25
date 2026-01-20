@@ -12,7 +12,9 @@ public class NewTeleOp extends CoreOpMode {
 
         waitForStart();
 
-        if (this.gamepad1.x) this.drivetrain.center(Constants.RED_GOAL, 3.0);
+        if (this.gamepad1.x) this.drivetrain.align(Constants.RED_GOAL, 3.0);
+
+
 
     }
 

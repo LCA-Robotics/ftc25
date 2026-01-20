@@ -35,8 +35,13 @@ public class Mecanum {
 
     }
 
-    public void center(int tag, double tolerance) {
-        while (tolerance < detector.getBearing(tag) || detector.getBearing(tag) < -tolerance) {
+    public void align(int tag, double range) {
+        double tolerance = 3.0;
+        while (
+                tolerance < detector.getBearing(tag) || detector.getBearing(tag) < -tolerance ||
+                range + tolerance < detector.getRange(tag) || detector.getRange(tag) < range - tolerance ||
+                tolerance < detector.getOffset(tag) || detector.getOffset(tag) < -tolerance
+        ) {
             move(
                     0.0,
                     0.0,
