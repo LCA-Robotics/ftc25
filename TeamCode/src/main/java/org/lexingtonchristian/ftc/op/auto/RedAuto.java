@@ -1,7 +1,6 @@
-package org.lexingtonchristian.ftc;
+package org.lexingtonchristian.ftc.op.auto;
 
 import static org.lexingtonchristian.ftc.util.Constants.CYCLE_TIME;
-import static org.lexingtonchristian.ftc.util.Constants.RED_GOAL;
 import static org.lexingtonchristian.ftc.util.Constants.initDrivetrain;
 import static org.lexingtonchristian.ftc.util.Constants.initIntake;
 import static org.lexingtonchristian.ftc.util.Constants.initLauncher;
@@ -15,11 +14,12 @@ import org.lexingtonchristian.ftc.components.Intake;
 import org.lexingtonchristian.ftc.components.Launcher;
 import org.lexingtonchristian.ftc.components.TagDetector;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
+import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
-@Autonomous(name = "New Red Auto", group = "Competition")
-public class NewRedAuto extends LinearOpMode {
+@Autonomous(name = "Red Alliance Autonomous", group = "Competition")
+public class RedAuto extends LinearOpMode {
 
     private Drivetrain drivetrain;
     private Launcher launcher;
@@ -32,35 +32,45 @@ public class NewRedAuto extends LinearOpMode {
 
         waitForStart();
 
-        drivetrain.drive(-60.0); // Reverse for 60 inches
+        launcher.spin(920);
 
-        drivetrain.center(2.0, () -> { // Center on the goal, 2 degrees tolerance
-            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(RED_GOAL);
+        drivetrain.drive(-45.0); // Reverse for 60 inches
+
+        drivetrain.center(3.0, () -> { // Center on the goal, 3 degrees tolerance
+            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
             return tag.map(aprilTagDetection ->
                     aprilTagDetection.ftcPose.bearing).orElse(0.0);
         });
-        launcher.servo(0.9); // Rotate the launcher servo continuously
-        intake.run(0.7); // Feed balls to the launcher
-        launcher.spin(1200);
+        launcher.servo(1.0); // Rotate the launcher servo continuously
+        intake.run(1.0); // Feed balls to the launcher
 
         sleep(CYCLE_TIME * 3 + 1000); // Wait to cycle 3 balls, +1 second error.
         this.zeroAll();
 
+        drivetrain.drive(-15.0);
+
         drivetrain.rotate(45.0);
 
-        intake.run(0.7);
+        intake.run(1.0);
         launcher.servo(0.25);
         drivetrain.drive(42.0);
 
         intake.zero();
         launcher.servo(0.0);
 
+        launcher.spin(1100);
+
         drivetrain.drive(-42.0);
         drivetrain.rotate(-45.0);
 
+        drivetrain.center(3.0, () -> { // Center on the goal, 3 degrees tolerance
+            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
+            return tag.map(aprilTagDetection ->
+                    aprilTagDetection.ftcPose.bearing).orElse(0.0);
+        });
+
         intake.run(0.7);
         launcher.servo(0.9);
-        launcher.spin(1200);
 
         sleep(CYCLE_TIME * 3 + 1000);
         this.zeroAll();

@@ -113,10 +113,13 @@ public class Drivetrain {
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         int position = Constants.inchesToTicks((degrees / 360.0) * Constants.CIRCUMFERENCE);
-        this.backLeft.setTargetPosition(position);
-        this.frontLeft.setTargetPosition(position);
-        this.backRight.setTargetPosition(-position);
-        this.frontRight.setTargetPosition(-position);
+
+        this.backLeft.setTargetPosition(-position);
+        this.frontLeft.setTargetPosition(-position);
+        this.backRight.setTargetPosition(position);
+        this.frontRight.setTargetPosition(position);
+
+        this.motors.forEach(motor -> motor.setPower(0.25));
 
         setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -159,6 +162,9 @@ public class Drivetrain {
      */
     public void move(double x, double y, double yaw, double limit) {
 
+        final double FRONT_LIMIT = 0.85;
+        final double BACK_LIMIT = 0.95;
+
         double pBackRight   =  x - y - yaw;
         double pBackLeft    =  x + y + yaw;
         double pFrontRight  =  x + y - yaw;
@@ -173,10 +179,10 @@ public class Drivetrain {
             pFrontLeft  /= max;
         }
 
-        this.backRight.setPower(pBackRight * limit);
-        this.backLeft.setPower(pBackLeft * limit);
-        this.frontRight.setPower(pFrontRight * limit);
-        this.frontLeft.setPower(pFrontLeft * limit);
+        this.backRight.setPower(pBackRight * limit * BACK_LIMIT);
+        this.backLeft.setPower(pBackLeft * limit * BACK_LIMIT);
+        this.frontRight.setPower(pFrontRight * limit * FRONT_LIMIT);
+        this.frontLeft.setPower(pFrontLeft * limit * FRONT_LIMIT);
 
     }
 
@@ -186,7 +192,7 @@ public class Drivetrain {
 
         this.motors.forEach(motor -> {
             motor.setTargetPosition(Constants.inchesToTicks(distance * -1));
-            motor.setPower(0.5);
+            motor.setPower(0.75);
         });
 
         setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -205,6 +211,7 @@ public class Drivetrain {
         this.backLeft.setPower(0.0);
         this.frontRight.setPower(0.0);
         this.frontLeft.setPower(0.0);
+        this.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void waitToPosition(int interval) {

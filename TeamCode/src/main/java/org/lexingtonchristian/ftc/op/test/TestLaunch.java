@@ -1,4 +1,4 @@
-package org.lexingtonchristian.ftc.test;
+package org.lexingtonchristian.ftc.op.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

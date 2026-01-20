@@ -1,4 +1,4 @@
-package org.lexingtonchristian.ftc.test;
+package org.lexingtonchristian.ftc.op.test;
 
 import com.acmerobotics.roadrunner.drive.Drive;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

@@ -53,11 +53,8 @@ public class TagDetector {
                 .anyMatch(tag -> tag.id == id);
     }
 
-    public Optional<AprilTagDetection> getObelisk() {
-        return this.getAprilTags()
-                .stream()
-                .filter(tag -> 20 < tag.id && tag.id < 24 )
-                .findFirst();
+    public double getBearing(int id) {
+        return getPossibleTag(id).map(tag -> tag.ftcPose.bearing).orElse(0.0);
     }
 
 }

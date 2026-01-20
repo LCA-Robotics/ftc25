@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.lexingtonchristian.ftc.components.Intake;
+import org.lexingtonchristian.ftc.components.TagDetector;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
 import org.lexingtonchristian.ftc.components.Launcher;
 
@@ -14,10 +16,6 @@ import org.lexingtonchristian.ftc.components.Launcher;
  * constants.
  */
 public class Constants {
-
-    public static final double kV = 0.0;
-    public static final double kA = 0.0;
-    public static final double kStatic = 0.0;
 
     public static final double WHEEL_RADIUS = 2.0;
     public static final double TRACK_WIDTH = 13.25;
@@ -28,15 +26,6 @@ public class Constants {
 
     public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312;
-
-    public static double MAX_VELOCITY = 52.041349386287315;
-    public static double MAX_ACCELERATION = 52.041349386287315;
-    public static double MAX_ANGULAR_VELOCITY = Math.toRadians(186.359355);
-    public static double MAX_ANGULAR_ACCELERATION = Math.toRadians(186.359355);
-
-    public static PIDFCoefficients MOTOR_VELOCITY_PID = new PIDFCoefficients(
-            0.0, 0.0, 0.0, 32767 / ((MAX_RPM / 60) * TICKS_PER_REV)
-    );
 
     /**
      * AprilTag id for the blue goal
@@ -65,7 +54,7 @@ public class Constants {
      */
     public static final int    CURRENT         = BLUE_GOAL;
 
-    public static final long   CYCLE_TIME      = 500; // milliseconds TODO: Find the time it takes to cycle 1 ball
+    public static final long   CYCLE_TIME      = 4250; // milliseconds TODO: Find the time it takes to cycle 1 ball
 
     public static final String BACK_RIGHT      = "backRight";
     public static final String BACK_LEFT       = "backLeft";
@@ -78,10 +67,12 @@ public class Constants {
 
     public static final String INTAKE_MOTOR    = "intake";
 
-    public static final double DRIVETRAIN_P    = 4.00;
-    public static final double DRIVETRAIN_I    = 0.50;
-    public static final double DRIVETRAIN_D    = 4.00;
-    public static final double DRIVETRAIN_F    = 11.7;
+    public static final String WEBCAM_NAME     = "webcam";
+
+    public static final double DRIVETRAIN_P    = 1.50;
+    public static final double DRIVETRAIN_I    = 0.00;
+    public static final double DRIVETRAIN_D    = 0.00;
+    public static final double DRIVETRAIN_F    = 19.5;
 
     /**
      * @param map the {@link HardwareMap} used to reference the motors
@@ -110,6 +101,10 @@ public class Constants {
 
     public static Intake initIntake(HardwareMap map) {
         return new Intake(map.get(DcMotor.class, INTAKE_MOTOR));
+    }
+
+    public static TagDetector initDetector(HardwareMap map) {
+        return new TagDetector(map.get(WebcamName.class, "webcam"));
     }
 
     public static double ticksToInches(double ticks) {
