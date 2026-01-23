@@ -17,12 +17,11 @@ import org.lexingtonchristian.ftc.util.Util;
 public class Motor {
 
     private final DcMotorEx raw;
-    private final boolean pidf;
 
-    public Motor(DcMotor motor, boolean pidf) {
+    public Motor(DcMotor motor) {
         this.raw = (DcMotorEx) motor;
-        this.pidf = pidf;
-        if (this.pidf) this.raw.setPIDFCoefficients(
+        setMode(STOP_AND_RESET_ENCODER);
+        this.raw.setPIDFCoefficients(
                 DcMotor.RunMode.RUN_USING_ENCODER,
                 new PIDFCoefficients(
                         DRIVETRAIN_P,
@@ -35,15 +34,13 @@ public class Motor {
 
     public void toPosition(int position, double power) {
 
-        setMode(STOP_AND_RESET_ENCODER);
-
-        this.raw.setTargetPosition(position);
-        this.raw.setPower(power);
+        this.raw.setTargetPosition(this.raw.getCurrentPosition() + position);
+        setPower(power);
         setMode(RUN_TO_POSITION);
 
         waitUntilPosition(10);
 
-        setMode(STOP_AND_RESET_ENCODER);
+        setPower(0.0);
 
     }
 

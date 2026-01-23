@@ -43,10 +43,10 @@ public class Mecanum {
                 tolerance < detector.getOffset(tag) || detector.getOffset(tag) < -tolerance
         ) {
             move(
-                    0.0,
-                    0.0,
+                    MathHelper.round((detector.getRange(tag) - range) * 0.02, 2),
+                    MathHelper.round(detector.getOffset(tag) * -0.02, 2),
                     MathHelper.round(detector.getBearing(tag) * -0.02, 2),
-                    1.0
+                    0.65
             );
         }
         zero();
@@ -112,7 +112,7 @@ public class Mecanum {
     private Motor registerMotor(MotorType type, HardwareMap map) {
         return this.motors.put(
                 type,
-                new Motor(map.get(DcMotorEx.class, type.name), true)
+                new Motor(map.get(DcMotorEx.class, type.name))
         );
     }
 

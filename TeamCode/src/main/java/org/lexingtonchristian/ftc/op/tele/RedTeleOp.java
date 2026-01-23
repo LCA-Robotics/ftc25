@@ -47,7 +47,7 @@ public class RedTeleOp extends LinearOpMode {
             );
 
             if (this.gamepad1.right_trigger > 0.0) {
-                this.launcher.spin(1050);
+                this.launcher.spin(950);
             } else {
                 this.launcher.zero();
             }
