@@ -20,7 +20,7 @@ public class Mecanum {
     private final Motor frontRight;
     private final Map<MotorType, Motor> motors;
 
-    private TagDetector detector;
+    private final TagDetector detector;
 
     public Mecanum(HardwareMap map) {
 

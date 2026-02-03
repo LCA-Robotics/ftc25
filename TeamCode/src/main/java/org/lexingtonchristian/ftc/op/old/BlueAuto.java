@@ -1,4 +1,4 @@
-package org.lexingtonchristian.ftc.op.auto;
+package org.lexingtonchristian.ftc.op.old;
 
 import static org.lexingtonchristian.ftc.util.Constants.CYCLE_TIME;
 import static org.lexingtonchristian.ftc.util.Constants.initDrivetrain;
@@ -6,6 +6,7 @@ import static org.lexingtonchristian.ftc.util.Constants.initIntake;
 import static org.lexingtonchristian.ftc.util.Constants.initLauncher;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -18,6 +19,8 @@ import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
+@Deprecated
+@Disabled
 @Autonomous(name = "Blue Alliance Autonomous", group = "Competition")
 public class BlueAuto extends LinearOpMode {
 

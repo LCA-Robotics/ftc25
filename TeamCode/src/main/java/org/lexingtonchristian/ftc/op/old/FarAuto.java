@@ -1,8 +1,9 @@
-package org.lexingtonchristian.ftc.op.auto;
+package org.lexingtonchristian.ftc.op.old;
 
 import static org.lexingtonchristian.ftc.util.Constants.CYCLE_TIME;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -11,6 +12,8 @@ import org.lexingtonchristian.ftc.components.Launcher;
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
 import org.lexingtonchristian.ftc.util.Constants;
 
+@Deprecated
+@Disabled
 @Autonomous(name = "Far Side Autonomous", group = "Competition")
 public class FarAuto extends LinearOpMode {
 

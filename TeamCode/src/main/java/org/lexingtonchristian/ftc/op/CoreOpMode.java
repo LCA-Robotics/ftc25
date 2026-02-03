@@ -4,6 +4,7 @@ import static org.lexingtonchristian.ftc.util.Constants.initDetector;
 import static org.lexingtonchristian.ftc.util.Constants.initIntake;
 import static org.lexingtonchristian.ftc.util.Constants.initLauncher;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.lexingtonchristian.ftc.components.Intake;
@@ -11,6 +12,7 @@ import org.lexingtonchristian.ftc.components.Launcher;
 import org.lexingtonchristian.ftc.components.TagDetector;
 import org.lexingtonchristian.ftc.components.drive.Mecanum;
 
+@Disabled
 public abstract class CoreOpMode extends LinearOpMode {
 
     protected Mecanum drivetrain;

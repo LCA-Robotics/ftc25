@@ -4,12 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.lexingtonchristian.ftc.components.drive.Drivetrain;
+import org.lexingtonchristian.ftc.op.CoreOpMode;
 import org.lexingtonchristian.ftc.util.Constants;
 
 @Autonomous(name = "Drive Forward", group = "Competition")
-public class DriveForwardAuto extends LinearOpMode {
-
-    private Drivetrain drivetrain;
+public class DriveForwardAuto extends CoreOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -20,10 +19,6 @@ public class DriveForwardAuto extends LinearOpMode {
 
         this.drivetrain.drive(24);
 
-    }
-
-    private void initHardware() {
-        this.drivetrain = Constants.initDrivetrain(this.hardwareMap);
     }
 
 }

@@ -1,5 +1,6 @@
-package org.lexingtonchristian.ftc.op.tele;
+package org.lexingtonchristian.ftc.op.old;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,6 +15,8 @@ import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
+@Deprecated
+@Disabled
 @TeleOp(name = "Blue Alliance TeleOp", group = "Competition")
 public class BlueTeleOp extends LinearOpMode {
 

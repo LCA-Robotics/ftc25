@@ -8,9 +8,11 @@ public class NewTeleOp extends CoreOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        final double SLOW_SPEED        = 0.30;
+        final double REGULAR_SPEED     = 0.85;
         final double LAUNCHER_VELOCITY = 1050;
-        final double INTAKE_SPEED      = 1.0;
-        final double SERVO_SPEED       = 1.0;
+        final double INTAKE_SPEED      = 1.00;
+        final double SERVO_SPEED       = 1.00;
 
         initHardware();
 
@@ -27,11 +29,11 @@ public class NewTeleOp extends CoreOpMode {
                     leftX,
                     leftY,
                     rightX,
-                    slow ? 0.30 : 0.85
+                    slow ? SLOW_SPEED : REGULAR_SPEED
             );
 
             if (this.gamepad1.b) this.launcher.servo(SERVO_SPEED);
-            if (this.gamepad1.x) this.drivetrain.align(Constants.RED_GOAL, 3.0);
+            if (this.gamepad1.x) this.drivetrain.align(Constants.RED_GOAL, 45.0);
 
             if (this.gamepad1.left_trigger > 0.0) {
                 this.intake.run(INTAKE_SPEED);
@@ -49,9 +51,9 @@ public class NewTeleOp extends CoreOpMode {
             }
 
 
+
         }
 
     }
-
 
 }
