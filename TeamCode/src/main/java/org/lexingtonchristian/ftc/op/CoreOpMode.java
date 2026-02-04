@@ -31,12 +31,12 @@ public abstract class CoreOpMode extends LinearOpMode {
 
     protected void initHardware() {
 
-        this.drivetrain = new Mecanum(hardwareMap);
-
         this.intake = initIntake(hardwareMap);
         this.launcher = initLauncher(hardwareMap);
 
         this.detector = initDetector(hardwareMap);
+
+        this.drivetrain = new Mecanum(hardwareMap, this.detector);
 
     }
 

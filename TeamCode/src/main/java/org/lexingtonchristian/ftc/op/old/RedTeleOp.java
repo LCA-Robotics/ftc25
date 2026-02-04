@@ -15,8 +15,6 @@ import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
-@Deprecated
-@Disabled
 @TeleOp(name = "Red Alliance TeleOp", group = "Competition")
 public class RedTeleOp extends LinearOpMode {
 
@@ -32,6 +30,8 @@ public class RedTeleOp extends LinearOpMode {
         initHardware();
 
         waitForStart();
+
+        double launcherSpeed = 950;
 
         while (this.opModeIsActive()) {
 
@@ -50,7 +50,7 @@ public class RedTeleOp extends LinearOpMode {
             );
 
             if (this.gamepad1.right_trigger > 0.0) {
-                this.launcher.spin(950);
+                this.launcher.spin(launcherSpeed);
             } else {
                 this.launcher.zero();
             }
@@ -78,6 +78,9 @@ public class RedTeleOp extends LinearOpMode {
                     return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
                 });
             }
+
+            if (this.gamepad1.start) launcherSpeed = 950;
+            if (this.gamepad1.back) launcherSpeed = 1150;
 
         }
 

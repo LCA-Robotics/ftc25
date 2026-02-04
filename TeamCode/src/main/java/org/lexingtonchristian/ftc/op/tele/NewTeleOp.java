@@ -1,8 +1,11 @@
 package org.lexingtonchristian.ftc.op.tele;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.lexingtonchristian.ftc.op.CoreOpMode;
 import org.lexingtonchristian.ftc.util.Constants;
 
+@TeleOp
 public class NewTeleOp extends CoreOpMode {
 
     @Override

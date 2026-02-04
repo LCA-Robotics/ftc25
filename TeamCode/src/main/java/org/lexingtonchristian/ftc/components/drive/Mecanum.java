@@ -22,7 +22,7 @@ public class Mecanum {
 
     private final TagDetector detector;
 
-    public Mecanum(HardwareMap map) {
+    public Mecanum(HardwareMap map, TagDetector detector) {
 
         this.motors = new HashMap<>();
 
@@ -31,7 +31,7 @@ public class Mecanum {
         this.backRight = registerMotor(MotorType.BACK_RIGHT, map);
         this.frontRight = registerMotor(MotorType.FRONT_RIGHT, map);
 
-        this.detector = new TagDetector(map.get(WebcamName.class, Constants.WEBCAM_NAME));
+        this.detector = detector;
 
     }
 
@@ -110,10 +110,9 @@ public class Mecanum {
     }
 
     private Motor registerMotor(MotorType type, HardwareMap map) {
-        return this.motors.put(
-                type,
-                new Motor(map.get(DcMotorEx.class, type.name))
-        );
+        Motor motor = new Motor(map.get(DcMotorEx.class, type.name));
+        this.motors.put(type, motor);
+        return motor;
     }
 
     public enum MotorType {
