@@ -53,7 +53,7 @@ public class Constants {
      */
     public static final int    CURRENT         = BLUE_GOAL;
 
-    public static final long   CYCLE_TIME      = 4250; // milliseconds TODO: Find the time it takes to cycle 1 ball
+    public static final long   CYCLE_TIME      = 3000; // milliseconds TODO: Find the time it takes to cycle 1 ball
 
     public static final String BACK_RIGHT      = "backRight";
     public static final String BACK_LEFT       = "backLeft";

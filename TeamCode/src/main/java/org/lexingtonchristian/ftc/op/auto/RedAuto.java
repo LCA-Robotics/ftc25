@@ -19,8 +19,6 @@ import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
-@Deprecated
-@Disabled
 @Autonomous(name = "Red Alliance Autonomous", group = "Competition")
 public class RedAuto extends LinearOpMode {
 
@@ -35,11 +33,11 @@ public class RedAuto extends LinearOpMode {
 
         waitForStart();
 
-        launcher.spin(920);
+        launcher.spin(950);
 
-        drivetrain.drive(-45.0); // Reverse for 60 inches
+        drivetrain.drive(-45.0); // Reverse for 45 inches
 
-        drivetrain.center(3.0, () -> { // Center on the goal, 3 degrees tolerance
+        drivetrain.center(5.0, () -> { // Center on the goal, 3 degrees tolerance
             Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
             return tag.map(aprilTagDetection ->
                     aprilTagDetection.ftcPose.bearing).orElse(0.0);
@@ -50,9 +48,9 @@ public class RedAuto extends LinearOpMode {
         sleep(CYCLE_TIME * 3 + 1000); // Wait to cycle 3 balls, +1 second error.
         this.zeroAll();
 
-        drivetrain.drive(-15.0);
+        drivetrain.drive(-10.0);
 
-        drivetrain.rotate(45.0);
+        drivetrain.rotate(42.0);
 
         intake.run(1.0);
         launcher.servo(0.25);
@@ -64,7 +62,9 @@ public class RedAuto extends LinearOpMode {
         launcher.spin(1100);
 
         drivetrain.drive(-42.0);
-        drivetrain.rotate(-45.0);
+        drivetrain.rotate(-90.0);
+        drivetrain.drive(12.0);
+        drivetrain.rotate(60);
 
         drivetrain.center(3.0, () -> { // Center on the goal, 3 degrees tolerance
             Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
