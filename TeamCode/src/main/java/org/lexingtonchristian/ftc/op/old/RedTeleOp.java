@@ -35,6 +35,8 @@ public class RedTeleOp extends LinearOpMode {
 
         while (this.opModeIsActive()) {
 
+            if (isStopRequested()) break;
+
             // If slowed, run at 30% speed; else, run at 85%
             double speedLimit = this.gamepad1.right_bumper ? 0.30 : 0.85;
 
@@ -83,6 +85,11 @@ public class RedTeleOp extends LinearOpMode {
             if (this.gamepad1.back) launcherSpeed = 1150;
 
         }
+
+        this.intake.zero();
+        this.launcher.zero();
+        this.launcher.servo(0.0);
+        this.drivetrain.zero();
 
     }
 

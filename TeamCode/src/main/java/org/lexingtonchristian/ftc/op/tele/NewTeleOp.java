@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.lexingtonchristian.ftc.op.CoreOpMode;
 import org.lexingtonchristian.ftc.util.Constants;
+import org.lexingtonchristian.ftc.util.Util;
 
 @TeleOp
 public class NewTeleOp extends CoreOpMode {
@@ -53,7 +54,10 @@ public class NewTeleOp extends CoreOpMode {
                 this.launcher.spin(LAUNCHER_VELOCITY);
             }
 
-
+            if (isStopRequested()) {
+                Util.stop = true;
+                break;
+            }
 
         }
 

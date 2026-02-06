@@ -1,6 +1,7 @@
 package org.lexingtonchristian.ftc.components.motor;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_WITHOUT_ENCODER;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
 import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_D;
 import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_F;
@@ -50,6 +51,7 @@ public class Motor {
     }
 
     public void setPower(double power) {
+        this.raw.setMode(RUN_WITHOUT_ENCODER);
         this.raw.setPower(power);
     }
 
