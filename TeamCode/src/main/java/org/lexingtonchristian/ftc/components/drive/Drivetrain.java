@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  *     <ul>
  *         <li>{@link Drivetrain#move(double, double, double, double)}</li>
  *         <li>{@link Drivetrain#turn(double)}</li>
- *         <li>{@link Drivetrain#center(double, Supplier)}</li>
+ *         <li>{@link Drivetrain#center(double, Supplier, Supplier)}</li>
  *         <li>{@link Drivetrain#distance(double, Supplier)}</li>
  *     </ul>
  * </p>
@@ -52,10 +52,28 @@ public class Drivetrain {
 
     }
 
-    public void center(double tolerance, Supplier<Double> bearing) {
-        while (tolerance < bearing.get() || bearing.get() < -tolerance) {
-            this.turn(MathHelper.round(bearing.get() * -0.02, 2));
+    public void center(double tolerance, Supplier<Double> bearing, Supplier<Boolean> stop) {
+
+        double theta = bearing.get();
+        double power;
+        boolean corrected = false;
+
+        while (!corrected) {
+
+            power = MathHelper.round(
+                    0.1 * Math.signum(theta),
+                    2
+            );
+
+            this.turn(power);
+
+            theta = bearing.get();
+            corrected = stop.get() ||
+                    (-tolerance < theta && theta < tolerance) ||
+                    Math.abs(power) < 0.01;
+
         }
+
         this.zero();
     }
 
@@ -88,7 +106,7 @@ public class Drivetrain {
      * </p>
      *
      * @param yaw turn power
-     * @see Drivetrain#center(double, Supplier)
+     * @see Drivetrain#center(double, Supplier, Supplier)
      * @see Drivetrain#move(double, double, double, double)
      */
     public void turn(double yaw) {
@@ -104,7 +122,7 @@ public class Drivetrain {
      * </p>
      *
      * @param degrees degrees to turn
-     * @see Drivetrain#center(double, Supplier)
+     * @see Drivetrain#center(double, Supplier, Supplier)
      * @see Drivetrain#move(double, double, double, double)
      */
     public void rotate(double degrees) {

@@ -5,6 +5,8 @@ import java.math.RoundingMode;
 
 public class MathHelper {
 
+    public static final double EPSILON = 1e-6;
+
     public static double clamp(double val, double min, double max) {
         return Math.max(min, (Math.min(val, max)));
     }

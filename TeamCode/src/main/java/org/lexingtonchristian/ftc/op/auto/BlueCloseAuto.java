@@ -6,7 +6,6 @@ import static org.lexingtonchristian.ftc.util.Constants.initIntake;
 import static org.lexingtonchristian.ftc.util.Constants.initLauncher;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -19,8 +18,8 @@ import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
-@Autonomous(name = "Red Alliance Autonomous", group = "Competition")
-public class RedAuto extends LinearOpMode {
+@Autonomous(name = "Close Blue Autonomous", group = "Competition")
+public class BlueCloseAuto extends LinearOpMode {
 
     private Drivetrain drivetrain;
     private Launcher launcher;
@@ -37,11 +36,11 @@ public class RedAuto extends LinearOpMode {
 
         drivetrain.drive(-45.0); // Reverse for 45 inches
 
-        drivetrain.center(5.0, () -> { // Center on the goal, 3 degrees tolerance
-            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
+        drivetrain.center(3.0, () -> { // Center on the goal, 3 degrees tolerance
+            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.BLUE_GOAL);
             return tag.map(aprilTagDetection ->
                     aprilTagDetection.ftcPose.bearing).orElse(0.0);
-        });
+        }, this::isStopRequested);
         launcher.servo(1.0); // Rotate the launcher servo continuously
         intake.run(1.0); // Feed balls to the launcher
 
@@ -57,9 +56,10 @@ public class RedAuto extends LinearOpMode {
         drivetrain.drive(42.0);
 
         intake.zero();
-        launcher.servo(0.0);
+        sleep(4000);
+        this.zeroAll();
 
-        launcher.spin(1100);
+        /* launcher.spin(1100);
 
         drivetrain.drive(-42.0);
         drivetrain.rotate(-90.0);
@@ -67,16 +67,16 @@ public class RedAuto extends LinearOpMode {
         drivetrain.rotate(60);
 
         drivetrain.center(3.0, () -> { // Center on the goal, 3 degrees tolerance
-            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
+            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.BLUE_GOAL);
             return tag.map(aprilTagDetection ->
                     aprilTagDetection.ftcPose.bearing).orElse(0.0);
-        });
+        }, this::isStopRequested);
 
         intake.run(0.7);
         launcher.servo(0.9);
 
         sleep(CYCLE_TIME * 3 + 1000);
-        this.zeroAll();
+        this.zeroAll(); */
 
     }
 

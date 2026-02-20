@@ -1,6 +1,5 @@
-package org.lexingtonchristian.ftc.op.old;
+package org.lexingtonchristian.ftc.op.tele;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -63,21 +62,19 @@ public class RedTeleOp extends LinearOpMode {
             } else if (this.gamepad1.left_bumper) {
                 this.intake.run(-0.8);
                 this.launcher.servo(-1.0);
+            } else if (this.gamepad1.b) {
+                this.launcher.servo(1.0);
             } else {
                 this.intake.zero();
                 this.launcher.servo(0.0);
             }
 
-            if (this.gamepad1.b) {
-                this.launcher.servo(1.0);
-                this.sleep(1200);
-                this.launcher.servo(0.0);
-            }
-
             if (this.gamepad1.x && this.detector.hasTag(Constants.RED_GOAL)) {
-                this.drivetrain.center(5.0, () -> {
-                    Optional<AprilTagDetection> goal = this.detector.getPossibleTag(Constants.RED_GOAL);
-                    return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
+                new Thread(() -> {
+                    this.drivetrain.center(5.0, () -> {
+                        Optional<AprilTagDetection> goal = this.detector.getPossibleTag(Constants.RED_GOAL);
+                        return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
+                    }, this::isStopRequested);
                 });
             }
 

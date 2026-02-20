@@ -1,4 +1,4 @@
-package org.lexingtonchristian.ftc.op.old;
+package org.lexingtonchristian.ftc.op.auto;
 
 import static org.lexingtonchristian.ftc.util.Constants.CYCLE_TIME;
 import static org.lexingtonchristian.ftc.util.Constants.initDrivetrain;
@@ -6,7 +6,6 @@ import static org.lexingtonchristian.ftc.util.Constants.initIntake;
 import static org.lexingtonchristian.ftc.util.Constants.initLauncher;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -19,10 +18,8 @@ import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
-@Deprecated
-@Disabled
-@Autonomous(name = "Blue Alliance Autonomous", group = "Competition")
-public class BlueAuto extends LinearOpMode {
+@Autonomous(name = "Close Red Autonomous", group = "Competition")
+public class RedCloseAuto extends LinearOpMode {
 
     private Drivetrain drivetrain;
     private Launcher launcher;
@@ -35,48 +32,51 @@ public class BlueAuto extends LinearOpMode {
 
         waitForStart();
 
-        launcher.spin(920);
+        launcher.spin(950);
 
-        drivetrain.drive(-45.0); // Reverse for 60 inches
+        drivetrain.drive(-45.0); // Reverse for 45 inches
 
         drivetrain.center(3.0, () -> { // Center on the goal, 3 degrees tolerance
-            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.BLUE_GOAL);
+            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
             return tag.map(aprilTagDetection ->
                     aprilTagDetection.ftcPose.bearing).orElse(0.0);
-        });
+        }, this::isStopRequested);
         launcher.servo(1.0); // Rotate the launcher servo continuously
         intake.run(1.0); // Feed balls to the launcher
 
         sleep(CYCLE_TIME * 3 + 1000); // Wait to cycle 3 balls, +1 second error.
         this.zeroAll();
 
-        drivetrain.drive(-15.0);
+        drivetrain.drive(-10.0);
 
-        drivetrain.rotate(-45.0);
+        drivetrain.rotate(42.0);
 
         intake.run(1.0);
         launcher.servo(0.25);
         drivetrain.drive(42.0);
 
         intake.zero();
-        launcher.servo(0.0);
+        sleep(4000);
+        this.zeroAll();
 
-        launcher.spin(1100);
+        /* launcher.spin(1100);
 
         drivetrain.drive(-42.0);
-        drivetrain.rotate(45.0);
+        drivetrain.rotate(-90.0);
+        drivetrain.drive(12.0);
+        drivetrain.rotate(60);
 
         drivetrain.center(3.0, () -> { // Center on the goal, 3 degrees tolerance
-            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.BLUE_GOAL);
+            Optional<AprilTagDetection> tag = this.tagDetector.getPossibleTag(Constants.RED_GOAL);
             return tag.map(aprilTagDetection ->
                     aprilTagDetection.ftcPose.bearing).orElse(0.0);
-        });
+        }, this::isStopRequested);
 
         intake.run(0.7);
         launcher.servo(0.9);
 
         sleep(CYCLE_TIME * 3 + 1000);
-        this.zeroAll();
+        this.zeroAll(); */
 
     }
 

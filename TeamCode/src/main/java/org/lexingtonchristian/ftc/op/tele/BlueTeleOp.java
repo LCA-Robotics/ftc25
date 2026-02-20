@@ -1,6 +1,5 @@
-package org.lexingtonchristian.ftc.op.old;
+package org.lexingtonchristian.ftc.op.tele;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,8 +14,6 @@ import org.lexingtonchristian.ftc.util.Constants;
 
 import java.util.Optional;
 
-@Deprecated
-@Disabled
 @TeleOp(name = "Blue Alliance TeleOp", group = "Competition")
 public class BlueTeleOp extends LinearOpMode {
 
@@ -33,7 +30,11 @@ public class BlueTeleOp extends LinearOpMode {
 
         waitForStart();
 
+        double launcherSpeed = 950;
+
         while (this.opModeIsActive()) {
+
+            if (isStopRequested()) break;
 
             // If slowed, run at 30% speed; else, run at 85%
             double speedLimit = this.gamepad1.right_bumper ? 0.30 : 0.85;
@@ -50,7 +51,7 @@ public class BlueTeleOp extends LinearOpMode {
             );
 
             if (this.gamepad1.right_trigger > 0.0) {
-                this.launcher.spin(1050);
+                this.launcher.spin(launcherSpeed);
             } else {
                 this.launcher.zero();
             }
@@ -61,14 +62,10 @@ public class BlueTeleOp extends LinearOpMode {
             } else if (this.gamepad1.left_bumper) {
                 this.intake.run(-0.8);
                 this.launcher.servo(-1.0);
+            } else if (this.gamepad1.b) {
+                this.launcher.servo(1.0);
             } else {
                 this.intake.zero();
-                this.launcher.servo(0.0);
-            }
-
-            if (this.gamepad1.b) {
-                this.launcher.servo(1.0);
-                this.sleep(1200);
                 this.launcher.servo(0.0);
             }
 
@@ -76,8 +73,11 @@ public class BlueTeleOp extends LinearOpMode {
                 this.drivetrain.center(5.0, () -> {
                     Optional<AprilTagDetection> goal = this.detector.getPossibleTag(Constants.BLUE_GOAL);
                     return goal.map(aprilTagDetection -> aprilTagDetection.ftcPose.bearing).orElse(0.0);
-                });
+                }, this::isStopRequested);
             }
+
+            if (this.gamepad1.start) launcherSpeed = 950;
+            if (this.gamepad1.back) launcherSpeed = 1150;
 
         }
 
