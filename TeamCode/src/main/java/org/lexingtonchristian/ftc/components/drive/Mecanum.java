@@ -10,7 +10,10 @@ import org.lexingtonchristian.ftc.util.Constants;
 import org.lexingtonchristian.ftc.util.MathHelper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 public class Mecanum {
 
@@ -107,6 +110,10 @@ public class Mecanum {
 
     public void zero(MotorType motor) {
         this.motors.get(motor).zero();
+    }
+
+    public void forEach(BiConsumer<MotorType, Motor> action) {
+        this.motors.forEach(action);
     }
 
     private Motor registerMotor(MotorType type, HardwareMap map) {

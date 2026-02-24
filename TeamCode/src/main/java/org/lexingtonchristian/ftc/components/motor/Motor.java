@@ -59,6 +59,10 @@ public class Motor {
         this.raw.setVelocity(velocity);
     }
 
+    public double getVelocity() {
+        return this.raw.getVelocity();
+    }
+
     public void setMode(DcMotor.RunMode mode) {
         this.raw.setMode(mode);
     }
