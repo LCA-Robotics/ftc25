@@ -57,7 +57,7 @@ public class RecordingOpMode extends LinearOpMode {
                 );
 
                 current = System.currentTimeMillis();
-                if (current < last + 10) continue;
+                if (current < last + 50) continue;
                 last = current;
 
                 List<DeviceSnapshot> snapshots = new ArrayList<>();

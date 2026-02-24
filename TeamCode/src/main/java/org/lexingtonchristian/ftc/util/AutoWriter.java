@@ -27,7 +27,7 @@ public class AutoWriter {
 
     public void writeSnapshot(long time, DeviceSnapshot... snapshots) throws IOException {
 
-        writer.append("ms ").append(String.valueOf(time));
+        writer.append(String.valueOf(time));
 
         for (DeviceSnapshot snapshot : snapshots) {
 
