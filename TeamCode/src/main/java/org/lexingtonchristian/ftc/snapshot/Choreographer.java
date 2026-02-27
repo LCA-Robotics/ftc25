@@ -67,10 +67,11 @@ public class Choreographer {
     public static class Builder {
 
         private final String filename;
-        private List<Device<?>> devices;
+        private final List<Device<?>> devices;
 
         public Builder(String filename) {
             this.filename = filename;
+            this.devices = new ArrayList<>();
         }
 
         public <T> Builder addDevice(Device<T> device) {

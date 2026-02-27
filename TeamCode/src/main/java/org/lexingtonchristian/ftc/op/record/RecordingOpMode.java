@@ -18,8 +18,7 @@ public class RecordingOpMode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        this.detector = initDetector(hardwareMap);
-        this.drivetrain = new Mecanum(hardwareMap, detector);
+        this.drivetrain = new Mecanum(hardwareMap);
 
         Choreographer.Builder builder = new Choreographer.Builder("test.txt");
         this.drivetrain.forEach((type, motor) -> builder.addDevice(motor));

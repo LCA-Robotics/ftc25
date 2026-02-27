@@ -23,7 +23,7 @@ public class Mecanum {
 
     private final TagDetector detector;
 
-    public Mecanum(HardwareMap map, TagDetector detector) {
+    public Mecanum(HardwareMap map/*, TagDetector detector*/) {
 
         this.motors = new HashMap<>();
 
@@ -35,7 +35,7 @@ public class Mecanum {
         this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        this.detector = detector;
+        this.detector = null;
 
     }
 
