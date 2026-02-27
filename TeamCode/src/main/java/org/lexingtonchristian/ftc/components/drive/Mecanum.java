@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.lexingtonchristian.ftc.components.TagDetector;
 import org.lexingtonchristian.ftc.components.hardware.Motor;
-import org.lexingtonchristian.ftc.util.Constants;
-
 import org.lexingtonchristian.ftc.util.Constants.MotorType;
 import org.lexingtonchristian.ftc.util.MathHelper;
 

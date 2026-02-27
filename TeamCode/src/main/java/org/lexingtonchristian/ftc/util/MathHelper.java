@@ -1,9 +1,10 @@
 package org.lexingtonchristian.ftc.util;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import static java.lang.Math.*;
 
 public class MathHelper {
 

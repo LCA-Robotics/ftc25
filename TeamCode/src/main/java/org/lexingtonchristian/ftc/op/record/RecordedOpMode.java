@@ -8,11 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.lexingtonchristian.ftc.components.TagDetector;
 import org.lexingtonchristian.ftc.components.drive.Mecanum;
 import org.lexingtonchristian.ftc.snapshot.Choreographer;
-import org.lexingtonchristian.ftc.snapshot.Device;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Autonomous(name = "Recorded Autonomous")
 public class RecordedOpMode extends LinearOpMode {
