@@ -3,12 +3,14 @@ package org.lexingtonchristian.ftc.util;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import static java.lang.Math.*;
+
 public class MathHelper {
 
     public static final double EPSILON = 1e-6;
 
     public static double clamp(double val, double min, double max) {
-        return Math.max(min, (Math.min(val, max)));
+        return max(min, (min(val, max)));
     }
 
     public static double max(double... values) {
@@ -16,7 +18,7 @@ public class MathHelper {
         double current;
         for (int i = 1; i < values.length; i++) {
             current = values[i];
-            max = Math.max(current, max);
+            max = max(current, max);
         }
         return max;
     }
@@ -29,7 +31,7 @@ public class MathHelper {
     }
 
     public static boolean roughEqual(double a, double b, double tolerance) {
-        return (a - tolerance) < b && b < (a + tolerance);
+        return abs(a - b) < tolerance;
     }
 
 }

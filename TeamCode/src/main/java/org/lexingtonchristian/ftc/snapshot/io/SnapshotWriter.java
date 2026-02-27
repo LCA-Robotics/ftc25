@@ -1,19 +1,20 @@
-package org.lexingtonchristian.ftc.util;
+package org.lexingtonchristian.ftc.snapshot.io;
 
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
-import org.lexingtonchristian.ftc.snapshot.DeviceSnapshot;
+import org.lexingtonchristian.ftc.snapshot.Device;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
 
-public class AutoWriter {
+public class SnapshotWriter {
 
     protected File file;
     protected BufferedWriter writer;
 
-    public AutoWriter(String filename) throws IOException {
+    public SnapshotWriter(String filename) throws IOException {
 
         this.file = new File(filename);
         if (!file.isAbsolute()) this.file = new File(AppUtil.ROBOT_DATA_DIR, filename);
@@ -25,22 +26,13 @@ public class AutoWriter {
 
     }
 
-    public void writeSnapshot(long time, DeviceSnapshot... snapshots) throws IOException {
+    public <T> SnapshotWriter writeSnapshot(Device.Snapshot<T> snapshot) throws IOException {
+        writer.append(String.format("%s\t%s\t", snapshot.name, snapshot.value));
+        return this;
+    }
 
-        writer.append(String.valueOf(time));
-
-        for (DeviceSnapshot snapshot : snapshots) {
-
-            writer.append('\t');
-
-            writer.append(snapshot.name);
-            writer.append(' ');
-            writer.append(String.valueOf(snapshot.value));
-
-        }
-
+    public void endLine() throws IOException {
         writer.append("\r\n");
-
     }
 
     public void close() {

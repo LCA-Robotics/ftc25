@@ -17,11 +17,6 @@ public class Constants {
     public static final double CIRCUMFERENCE = Math.hypot(TRACK_WIDTH, WHEELBASE) * Math.PI;
     public static final double TICKS_PER_REV = 537.6;
 
-    public static final String BACK_RIGHT      = "backRight";
-    public static final String BACK_LEFT       = "backLeft";
-    public static final String FRONT_RIGHT     = "frontRight";
-    public static final String FRONT_LEFT      = "frontLeft";
-
     public static final double DRIVETRAIN_P    = 1.50;
     public static final double DRIVETRAIN_I    = 0.00;
     public static final double DRIVETRAIN_D    = 0.00;
@@ -33,6 +28,21 @@ public class Constants {
 
     public static int inchesToTicks(double inches) {
         return (int) ((inches / (WHEEL_RADIUS * 2 * Math.PI)) * TICKS_PER_REV);
+    }
+
+    public enum MotorType {
+
+        BACK_LEFT("backLeft"),
+        FRONT_LEFT("frontLeft"),
+        BACK_RIGHT("backRight"),
+        FRONT_RIGHT("frontRight");
+
+        public final String name;
+
+        MotorType(String name) {
+            this.name = name;
+        }
+
     }
 
 }

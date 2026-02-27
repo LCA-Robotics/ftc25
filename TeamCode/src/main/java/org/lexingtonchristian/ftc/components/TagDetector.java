@@ -54,15 +54,21 @@ public class TagDetector {
     }
 
     public double getBearing(int id) {
-        return getPossibleTag(id).map(tag -> tag.ftcPose.bearing).orElse(0.0);
+        return getPossibleTag(id)
+                .map(tag -> tag.ftcPose.bearing)
+                .orElse(0.0);
     }
 
     public double getRange(int id) {
-        return getPossibleTag(id).map(tag -> tag.ftcPose.range).orElse(0.0);
+        return getPossibleTag(id)
+                .map(tag -> tag.ftcPose.range)
+                .orElse(0.0);
     }
 
     public double getOffset(int id) {
-        return getPossibleTag(id).map(tag -> tag.ftcPose.x).orElse(0.0);
+        return getPossibleTag(id)
+                .map(tag -> tag.ftcPose.x)
+                .orElse(0.0);
     }
 
 }

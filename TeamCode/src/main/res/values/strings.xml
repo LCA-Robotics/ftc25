@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="enter_file_name">Please enter a file name for your OpMode.</string>
 </resources>

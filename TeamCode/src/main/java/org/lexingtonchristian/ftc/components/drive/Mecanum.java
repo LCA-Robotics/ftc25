@@ -1,19 +1,19 @@
 package org.lexingtonchristian.ftc.components.drive;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.lexingtonchristian.ftc.components.TagDetector;
-import org.lexingtonchristian.ftc.components.motor.Motor;
+import org.lexingtonchristian.ftc.components.hardware.Motor;
 import org.lexingtonchristian.ftc.util.Constants;
+
+import org.lexingtonchristian.ftc.util.Constants.MotorType;
 import org.lexingtonchristian.ftc.util.MathHelper;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 
 public class Mecanum {
 
@@ -33,6 +33,9 @@ public class Mecanum {
         this.frontLeft = registerMotor(MotorType.FRONT_LEFT, map);
         this.backRight = registerMotor(MotorType.BACK_RIGHT, map);
         this.frontRight = registerMotor(MotorType.FRONT_RIGHT, map);
+
+        this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.detector = detector;
 
@@ -117,24 +120,9 @@ public class Mecanum {
     }
 
     private Motor registerMotor(MotorType type, HardwareMap map) {
-        Motor motor = new Motor(map.get(DcMotorEx.class, type.name));
+        Motor motor = new Motor(map.get(DcMotorEx.class, type.name), type);
         this.motors.put(type, motor);
         return motor;
-    }
-
-    public enum MotorType {
-
-        BACK_LEFT("backLeft"),
-        FRONT_LEFT("frontLeft"),
-        BACK_RIGHT("backRight"),
-        FRONT_RIGHT("frontRight");
-
-        public final String name;
-
-        MotorType(String name) {
-            this.name = name;
-        }
-
     }
 
 }
