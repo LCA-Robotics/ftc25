@@ -82,28 +82,28 @@ public class Mecanum {
 
     //<editor-fold desc="Encoder movement">
 
-    public void drive(double distance) {
-        this.motors.forEach((type, motor) -> motor.toPosition(
-                Constants.inchesToTicks(distance * -1.0),
-                0.75
-        ));
-    }
-
-    public void strafe(double distance) {
-        int pos = Constants.inchesToTicks(distance);
-        this.backLeft.toPosition(-pos, 0.75);
-        this.frontLeft.toPosition(pos, 0.75);
-        this.backRight.toPosition(pos, 0.75);
-        this.frontRight.toPosition(-pos, 0.75);
-    }
-
-    public void turn(double degrees) {
-        int pos = Constants.inchesToTicks((degrees / 360.0) * Constants.CIRCUMFERENCE);
-        this.backLeft.toPosition(pos, 0.75);
-        this.frontLeft.toPosition(pos, 0.75);
-        this.backRight.toPosition(-pos, 0.75);
-        this.frontRight.toPosition(-pos, 0.75);
-    }
+//    public void drive(double distance) {
+//        this.motors.forEach((type, motor) -> motor.toPosition(
+//                Constants.inchesToTicks(distance * -1.0),
+//                0.75
+//        ));
+//    }
+//
+//    public void strafe(double distance) {
+//        int pos = Constants.inchesToTicks(distance);
+//        this.backLeft.toPosition(-pos, 0.75);
+//        this.frontLeft.toPosition(pos, 0.75);
+//        this.backRight.toPosition(pos, 0.75);
+//        this.frontRight.toPosition(-pos, 0.75);
+//    }
+//
+//    public void turn(double degrees) {
+//        int pos = Constants.inchesToTicks((degrees / 360.0) * Constants.CIRCUMFERENCE);
+//        this.backLeft.toPosition(pos, 0.75);
+//        this.frontLeft.toPosition(pos, 0.75);
+//        this.backRight.toPosition(-pos, 0.75);
+//        this.frontRight.toPosition(-pos, 0.75);
+//    }
 
     //</editor-fold>
 
