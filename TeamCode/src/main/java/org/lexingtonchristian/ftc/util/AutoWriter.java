@@ -25,17 +25,15 @@ public class AutoWriter {
 
     }
 
-    public void writeSnapshot(long time, DeviceSnapshot... snapshots) throws IOException {
-
-        writer.append(String.valueOf(time));
+    public void writeSnapshot(DeviceSnapshot... snapshots) throws IOException {
 
         for (DeviceSnapshot snapshot : snapshots) {
-
-            writer.append('\t');
 
             writer.append(snapshot.name);
             writer.append(' ');
             writer.append(String.valueOf(snapshot.value));
+
+            writer.append('\t');
 
         }
 

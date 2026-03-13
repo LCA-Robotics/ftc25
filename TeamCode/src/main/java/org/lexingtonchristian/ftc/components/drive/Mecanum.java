@@ -34,6 +34,9 @@ public class Mecanum {
         this.backRight = registerMotor(MotorType.BACK_RIGHT, map);
         this.frontRight = registerMotor(MotorType.FRONT_RIGHT, map);
 
+        this.backRight.reverse(true);
+        this.frontRight.reverse(true);
+
         this.detector = detector;
 
     }

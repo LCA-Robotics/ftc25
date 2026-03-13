@@ -25,8 +25,7 @@ public class RecordedOpMode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        this.detector = initDetector(hardwareMap);
-        this.drivetrain = new Mecanum(hardwareMap, this.detector);
+        this.drivetrain = new Mecanum(hardwareMap, null);
 
         waitForStart();
 
@@ -44,10 +43,11 @@ public class RecordedOpMode extends LinearOpMode {
                 last = current;
 
                 Map<String, Double> snapshot = reader.nextSnapshot();
+                if (snapshot == null) break;
 
                 this.drivetrain.forEach((type, motor) -> {
                     if (!snapshot.containsKey(type.name)) return;
-                    motor.setVelocity(snapshot.get(type.name));
+                    motor.setPower(snapshot.get(type.name));
                 });
 
             }

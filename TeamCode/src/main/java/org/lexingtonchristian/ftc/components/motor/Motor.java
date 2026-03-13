@@ -10,6 +10,7 @@ import static org.lexingtonchristian.ftc.util.Constants.DRIVETRAIN_P;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.lexingtonchristian.ftc.util.MathHelper;
@@ -50,6 +51,10 @@ public class Motor {
         setMode(STOP_AND_RESET_ENCODER);
     }
 
+    public double getPower() {
+        return this.raw.getPower();
+    }
+
     public void setPower(double power) {
         this.raw.setMode(RUN_WITHOUT_ENCODER);
         this.raw.setPower(power);
@@ -65,6 +70,10 @@ public class Motor {
 
     public void setMode(DcMotor.RunMode mode) {
         this.raw.setMode(mode);
+    }
+
+    public void reverse(boolean reversed) {
+        this.raw.setDirection(reversed ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
     }
 
     public void waitUntilPosition(int interval) {

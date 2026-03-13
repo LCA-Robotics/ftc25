@@ -2,7 +2,6 @@ package org.lexingtonchristian.ftc.op;
 
 import static org.lexingtonchristian.ftc.util.Constants.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -29,8 +28,7 @@ public class RecordingOpMode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        this.detector = initDetector(hardwareMap);
-        this.drivetrain = new Mecanum(hardwareMap, this.detector);
+        this.drivetrain = new Mecanum(hardwareMap, null);
 
         waitForStart();
 
@@ -62,12 +60,9 @@ public class RecordingOpMode extends LinearOpMode {
 
                 List<DeviceSnapshot> snapshots = new ArrayList<>();
                 this.drivetrain.forEach((type, motor) ->
-                        snapshots.add(snapshot(type.name, motor.getVelocity())));
+                        snapshots.add(snapshot(type.name, motor.getPower())));
 
-                writer.writeSnapshot(
-                        current - start,
-                        snapshots.toArray(new DeviceSnapshot[]{})
-                );
+                writer.writeSnapshot(snapshots.toArray(new DeviceSnapshot[]{}));
 
             }
 

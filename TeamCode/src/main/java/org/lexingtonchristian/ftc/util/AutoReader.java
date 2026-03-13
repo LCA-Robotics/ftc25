@@ -37,11 +37,12 @@ public class AutoReader {
         Map<String, Double> snapshot = new HashMap<>();
 
         String line = reader.readLine();
+        if (line == null) return null;
         List<String> data = new ArrayList<>(Arrays.asList(line.split("\t")));
-        data.remove(0);
 
         for (String motor : data) {
             String[] info = motor.split(" ");
+            if (info.length < 2) break;
             snapshot.put(info[0], Double.parseDouble(info[1]));
         }
 
