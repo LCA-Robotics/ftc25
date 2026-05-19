@@ -60,10 +60,10 @@ public class Mecanum {
 
     public void move(double x, double y, double yaw, double limit) {
 
-        double pBackLeft   = x + y + yaw;
-        double pFrontLeft  = x - y + yaw;
-        double pBackRight  = x - y - yaw;
-        double pFrontRight = x + y - yaw;
+        double pBackLeft   = y - x + yaw;
+        double pFrontLeft  = y + x + yaw;
+        double pBackRight  = y + x - yaw;
+        double pFrontRight = y - x - yaw;
 
         double max = MathHelper.max(pBackLeft, pFrontLeft, pBackRight, pFrontRight);
         if (max > 1.0) {
