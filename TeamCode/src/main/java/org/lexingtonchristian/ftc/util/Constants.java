@@ -1,5 +1,6 @@
 package org.lexingtonchristian.ftc.util;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -30,8 +31,23 @@ public class Constants {
         return new TagDetector(map.get(WebcamName.class, "webcam"));
     }
 
-    public static int inchesToTicks(double inches) {
-        return (int) ((inches / (WHEEL_RADIUS * 2 * Math.PI)) * TICKS_PER_REV);
+    public enum MotorType {
+
+        BACK_LEFT("backLeft"),
+        FRONT_LEFT("frontLeft"),
+        BACK_RIGHT("backRight"),
+        FRONT_RIGHT("frontRight");
+
+        public final String name;
+
+        MotorType(String name) {
+            this.name = name;
+        }
+
+        public DcMotor get(HardwareMap map) {
+            return map.get(DcMotor.class, name);
+        }
+
     }
 
 }
